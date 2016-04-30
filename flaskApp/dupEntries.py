@@ -20,5 +20,13 @@ def checkForDuplicate(location):
                 duplicated = open('duplicate.csv', 'w')     #creating a new file to save duplicate entries
                 duplicated.write(''.join(dupLines))   # writing to the new file
                 duplicated.close()  # closing the file after writing
+    for i in xrange(1):
+        timer = datetime.datetime.now() 	#get date and time
+        timeAndDate = timer.isoformat()		#geting time and date without spaces
+        fullTime = timeAndDate.split(".")[0]	#removing unused string from the date and time
+        randomNumber = '%04.4f' % random.random()	# generate a random number to make the time unigue
+        finalTimeAndDate = '-'.join([fullTime, randomNumber]) 	#add time and date to the random number
+    os.rename('duplicate', 'duplicate-' + finalTimeAndDate) 	#rename the output file with finalTimeAndDate
+    os.rename('newFile', 'newFile-' + finalTimeAndDate)		#same
+    print "All done -  Entries separated from duplicates and saved separately"	
 
-#checkForDuplicate()
