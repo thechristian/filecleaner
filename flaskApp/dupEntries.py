@@ -1,4 +1,8 @@
 import csv, glob
+import datetime
+import os
+import sys
+import random
 
 newLines = list()		# list for holding new entries
 dupLines = list()		# list for holding duplicate entries
@@ -26,7 +30,7 @@ def checkForDuplicate(location):
         fullTime = timeAndDate.split(".")[0]	#removing unused string from the date and time
         randomNumber = '%04.4f' % random.random()	# generate a random number to make the time unigue
         finalTimeAndDate = '-'.join([fullTime, randomNumber]) 	#add time and date to the random number
-    os.rename('duplicate', 'duplicate-' + finalTimeAndDate) 	#rename the output file with finalTimeAndDate
-    os.rename('newFile', 'newFile-' + finalTimeAndDate)		#same
-    print "All done -  Entries separated from duplicates and saved separately"	
+    os.rename('duplicate.csv', 'duplicate.csv-' + finalTimeAndDate) 	#rename the output file with finalTimeAndDate
+    os.rename('newFile.csv', 'newFile.csv-' + finalTimeAndDate)		#same
+   # print "All done -  Entries separated from duplicates and saved separately"
 
