@@ -31,14 +31,14 @@ def checkForDuplicate(location):
         randomNumber = '%04.4f' % random.random()   # generate a random number to make the time unigue
         finalTimeAndDate = '-'.join([fullTime, randomNumber]) 	# add time and date to the random number
 
-    filepathdup = ('duplicatefiles/duplicate.csv')
-    filepathnew = ('newfiles/newFile.csv')
+    # filepathdup = ('duplicatefiles/duplicate.csv')
+    # filepathnew = ('newfiles/newFile.csv')
 
-    if os.path.exists(filepathdup):
-        os.rename(filepathdup, 'duplicatefiles/duplicate.csv-' + finalTimeAndDate)  # rename the output file with finalTimeAndDate
-        os.rename(filepathnew, 'newfiles/newFile.csv-' + finalTimeAndDate)  # same
-    elif os.path.exists(filepathnew):
-        os.rename(filepathnew, 'newfiles/newFile.csv-' + finalTimeAndDate)  # rename the output file with finalTimeAndDate
+    # if os.path.exists(filepathdup):
+    #     os.rename(filepathdup, 'duplicatefiles/duplicate.csv-' + finalTimeAndDate)  # rename the output file with finalTimeAndDate
+    #     os.rename(filepathnew, 'newfiles/newFile.csv-' + finalTimeAndDate)  # same
+    # elif os.path.exists(filepathnew):
+    #     os.rename(filepathnew, 'newfiles/newFile.csv-' + finalTimeAndDate)  # rename the output file with finalTimeAndDate
 
    # print "All done -  Entries separated from duplicates and saved separately"
 
