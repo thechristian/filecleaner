@@ -2,22 +2,26 @@
 <html lang="en">
  
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
     <title>Check4Duplicates</title>
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/normalize.css">
 </head>
  
-<body>
- 	<div>
-		<form name="uploadfile" action="/upload" method="post" enctype="multipart/form-data">
-		<input type="file" name="dataFile" required = "required"/>
-		<input type="submit" value="Check File">
-		</form>
+	<body>
+ 		<div>
+			<form name="uploadfile" action="/upload" method="post" enctype="multipart/form-data">
+				<input type="file" name="dataFile" required = "required"/>
+				<button class="btn btn-danger" type="submit">Check File</button>
+			</form>
         </div>
  
-        <!-- <footer>
-            <p>&copy;2016 Check4Duplicates. Powered by <a target = "_blank" href= "http://versified.xyz">VersiTech</a> </p>
-        </footer>	 -->
+		<footer class="panel-footer">
+        	<p>&copy;2016 Check4Duplicates. Powered by<a class="btn btn-link" target = "_blank" href= "http://versified.xyz">VersiTech</a> </p>
+    	</footer>
  
-    </div>
-</body>
+	</body>
  
 </html>
