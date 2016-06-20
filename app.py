@@ -9,7 +9,7 @@ import csv, _csv
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024 #upload file size allowed 3MB
 
-ALLOWED_EXTENSIONS = set(['csv', 'txt '])    #file extensions allowed
+ALLOWED_EXTENSIONS = set(['csv', 'txt'])    #file extensions allowed
 
 for i in xrange(1):
     timer = datetime.datetime.now()  # get date and time
