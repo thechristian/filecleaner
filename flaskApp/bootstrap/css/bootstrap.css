@@ -1346,6 +1346,7 @@ a.text-primary:focus {
 }
 .text-success {
   color: #3c763d;
+  font-size: 30px;
 }
 a.text-success:hover,
 a.text-success:focus {
@@ -3457,7 +3458,7 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-block {
   display: block;
-  width: 100%;
+  width: 40%;
 }
 .btn-block + .btn-block {
   margin-top: 5px;
@@ -4963,7 +4964,7 @@ a.badge:focus {
   padding-bottom: 30px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eee;
+  background-color: white;
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -5484,11 +5485,15 @@ button.list-group-item-danger.active:focus {
   color: inherit;
 }
 .panel-footer {
-  padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #ddd;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  position: relative;
+  margin-top: 300px;
+  height: 180px;
+  clear: both;
+  padding: 1% 35%;
+  background-color: white;
+  border-top: 100% solid #ddd;
+  border-bottom-right-radius: 3%;
+  border-bottom-left-radius: 3%;
 }
 .panel > .list-group,
 .panel > .panel-collapse > .list-group {
