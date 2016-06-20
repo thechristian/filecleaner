@@ -21,7 +21,7 @@ def checkForDuplicate(location):
                 noDuplicate.close()		# closing the file after writing
             elif line in newLines:      # checking if each line entry already exist in the newline list
                 dupLines.append(line)	 # adding to the dupLines list
-                duplicated = open('duplicatefiles/duplicate.csv', 'w')   # creating a new file to save duplicate entries
+                duplicated = open('static/duplicates/duplicate.csv', 'w')   # creating a new file to save duplicate entries
                 duplicated.write(''.join(dupLines))   # writing to the new file
                 duplicated.close()  # closing the file after writing
     for i in xrange(1):
