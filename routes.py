@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from dupEntries import checkForDuplicate
-from utils import get_random_id
+from utils import get_random_id, allowed_file
 import os
 import sys
 
@@ -32,6 +32,5 @@ def upload_file():
                 return render_template('noduplicate.html')
             else:
                 return render_template('success.html')
-
         else:
             return "Error! File not supported."
