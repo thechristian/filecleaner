@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+    <title>Check4Duplicates</title>
+    <link rel="stylesheet" type="text/css" href="static/dist/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+ 
+	<body>
+		<nav class="light-blue darken-2" role="navigation">
+			<div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">VT</a>
+			  <ul class="right hide-on-med-and-down">
+			    <li><a href="#">Navbar Link</a></li>
+			  </ul>
+
+			  <ul id="nav-mobile" class="side-nav">
+			    <li><a href="#">Navbar Link</a></li>
+			  </ul>
+			  <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+			</div>
+		</nav>
+
+		<div class="section" id="index-banner">
+			<div class="container">
+				<br><br>
+					<div class="row upload-config">
+						<div class="col l3"> &nbsp; </div>
+						<div class="col l6">
+							<form name="uploadfile" action="/upload" method="post" enctype="multipart/form-data">
+								<div class="file-field input-field">
+									<button class="btn btn-danger" type="submit">Check File</button>
+									<input type="file" name="dataFile" required = "required"/>
+								
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>							
+								</div>
+							</form>								
+						</div>
+						<div class="col l3"></div>
+					</div>
+				<br><br>
+			</div>			
+		</div>
+
+		<footer class="page-footer grey darken-3">
+			<div class="container">
+			  <div class="row">
+			    <div class="col l4 s12">
+			      <h5 class="white-text">About Us</h5>
+			      <p class="grey-text text-lighten-4">
+			      We are a team of open minded individuals building solutions across the broad spectrum of 
+			      problems we encounter on a daily basis. This happens to be one of them.</p>
+			    </div>
+			    <div class="col l4 s12">
+			      <h5 class="white-text">Donate</h5>
+			      <p class="grey-text text-lighten-4">
+			      Since this has been so helpful, why don't you take some time to reward us (allow us to pat ourselves on the back).
+			      Do take some time to share or simply let your friends in on this little helper you've come across. 
+			      We would really appreciate that.
+			      </p>
+			    </div>
+			    <div class="col l4 s12">
+			      <h5 class="white-text">Reach Us</h5>
+			      <ul>
+			        <li><a class="white-text" href="#!">Facebook</a></li>
+			        <li><a class="white-text" href="#!">Twitter</a></li>
+			        <li><a class="white-text" href="#!">Pinterest</a></li>
+			        <li><a class="white-text" href="#!">Google Plus</a></li>
+			      </ul>
+			    </div>
+			  </div>
+			</div>
+			<div class="footer-copyright">
+			  <div class="container">
+			  	<p>&copy;2016 Check4Duplicates. Powered by <a class="orange-text text-lighten-3" target = "_blank" href= "http://versified.xyz">VersiTech</a> </p>
+			  </div>
+			</div>
+		</footer>
+
+		<script src="static/dist/jquery/js/jquery.min.js"></script>
+		<script src="static/dist/materialize/js/materialize.js"></script>
+		<script src="static/dist/materialize/js/init.js"></script>
+	</body>
+</html>
