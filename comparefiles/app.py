@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 import sys
-from dupFiles import checkFile
+from compareFiles import checkFile
 import random
 import datetime
 import hashlib
