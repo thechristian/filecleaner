@@ -30,9 +30,14 @@
 					<div class="row upload-config">
 						<div class="col l3"> &nbsp; </div>
 						<div class="col l6">
-							<form name="uploadfile" action="/upload" method="post" enctype="multipart/form-data">
+
+							<!--checking for only duplicate in file form-->
+							<form name="uploadfile" action="/checkduplicates" method="post" enctype="multipart/form-data">
 								<div class="file-field input-field">
 									<input type="file" name="dataFile" required = "required"/>
+									<p>Check For Duplicate In a File.</p>
+									<input type="file" name="dataFile" required = "required"/>
+									<button type="submit">Check Duplicates</button><br>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
 									</div>							
@@ -42,6 +47,26 @@
 									<div class="col l4">
 										<button class="btn btn-danger" type="submit">Check File</button>
 									</div>
+							</form><br>
+
+							<!--file column validation form-->
+							<form name="valfile" action="/valupload" method="post" enctype="multipart/form-data">
+								<div class="file-field input-field">
+									<p>Validate a Column in a File</p>
+									<input type="file" name="dataFile" required = "required"/><br>
+									<input type="checkbox" name="pnumbers" value="checked"> Phone Numbers<br>
+									<input type="checkbox" name="emails" value="checked"> E-mails<br>
+									<button type="submit">Validate</button>							
+								</div>
+							</form>	
+
+								<!--Comparing two files form-->
+							<form name="uploadfile" action="/comparefiles" method="post" enctype="multipart/form-data">
+								<div>
+									<p>Compare Two Files.</p>
+									First file: <input type="file" name="dataFile1" required = "required"/>
+        							Second file: <input type="file" name="dataFile2" required = "required"/>
+									<p><input type="submit" value="Compare Files"></p>
 								</div>
 							</form>								
 						</div>
@@ -63,10 +88,10 @@
 			    <div class="col l4 s12">
 			      <h5 class="white-text">Reach Us</h5>
 			      <ul>
-			        <li><a class="white-text" href="#!">Facebook</a></li>
-			        <li><a class="white-text" href="#!">Twitter</a></li>
-			        <li><a class="white-text" href="#!">Pinterest</a></li>
-			        <li><a class="white-text" href="#!">Google Plus</a></li>
+			        <li><a class="white-text" target="_blank" href="http://facebook.com/versified.xyz">Facebook</a></li>
+			        <li><a class="white-text" target="_blank" href="https://twitter.com/VersiTch">Twitter</a></li>
+			        <li><a class="white-text" target="_blank" href="https://www.pinterest.com/versitech/">Pinterest</a></li>
+			        <li><a class="white-text" target="_blank" href="http://plus.google.com/100228782387461458791">Google Plus</a></li>
 			      </ul>
 			    </div>
 			    <div class="col l4 s12">
