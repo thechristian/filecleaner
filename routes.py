@@ -14,7 +14,7 @@ messsage1 = hashlib.sha256()   # calling hash function to use
 messsage2 = hashlib.sha256()
 
 
-ALLOWED_EXTENSIONS = set(['csv', 'txt'])    #file extensions allowed
+ALLOWED_EXTENSIONS = set(['csv', 'xls', 'xlsx' 'txt'])    #file extensions allowed
 
 for i in xrange(1):
     timer = datetime.datetime.now()  # get date and time
