@@ -31,43 +31,48 @@
 						<div class="col l3"> &nbsp; </div>
 						<div class="col l6">
 
-							<!--checking for only duplicate in file form-->
+							<!--File cleaning form-->
 							<form name="uploadfile" action="/checkduplicates" method="post" enctype="multipart/form-data">
 								<div class="file-field input-field">
+									<p><b>File Cleaning.</b></p>
 									<input type="file" name="dataFile" required = "required"/>
-									<p>Check For Duplicate In a File.</p>
-									<input type="file" name="dataFile" required = "required"/>
-									<button type="submit">Check Duplicates</button><br>
-									<div class="file-path-wrapper">
+									<!--<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
-									</div>							
+									</div>		 -->		
+
+									<div class="file-field input-field">
+										<input type="checkbox" name="checkdup" value="checked">Check for duplicates<br>
+										<!--<input type="file" name="dataFile" required = "required"/><br> -->
+										<input type="checkbox" name="pnumbers" value="checked"> Phone Number validation<br>
+										<div class="file-path-wrapper">
+											<input type="text" name="phonenumbercol" placeholder="Column Name">
+										</div>
+										<input type="checkbox" name="emails" value="checked"> E-mail validation<br>
+										<div class="file-path-wrapper">
+											<input type="text" name="emailcol" placeholder="Column Name"> 
+										</div>
+										<input type="checkbox" name="comparefiles" value="checked">Compare two files<br>
+        								Second file: <input type="file" name="dataFile2" required = "required"/>
+									</div>
+
 								</div>
 								<div class="input-field row">
 									<div class="col l8">&nbsp;</div>
 									<div class="col l4">
-										<button class="btn btn-danger" type="submit">Check File</button>
+										<button class="btn btn-danger" type="submit">RUN</button>
 									</div>
 							</form><br>
 
 							<!--file column validation form-->
-							<form name="valfile" action="/valupload" method="post" enctype="multipart/form-data">
-								<div class="file-field input-field">
-									<p>Validate Columns in a File</p>
-									<input type="file" name="dataFile" required = "required"/><br>
-									<input type="checkbox" name="pnumbers" value="checked"> Phone Numbers<br>
-									<input type="checkbox" name="emails" value="checked"> E-mails<br>
-									<button type="submit">Validate</button>							
-								</div>
-							</form>	
+							<!--<form name="valfile" action="/valupload" method="post" enctype="multipart/form-data">
+
+							</form>	 -->
 
 								<!--Comparing two files form-->
-							<form name="uploadfile" action="/comparefiles" method="post" enctype="multipart/form-data">
+							<!-- <form name="uploadfile" action="/comparefiles" method="post" enctype="multipart/form-data">
 								<div>
-									<p>Compare Two Files.</p>
-									First file: <input type="file" name="dataFile1" required = "required"/>
-        							Second file: <input type="file" name="dataFile2" required = "required"/>
-									<p><input type="submit" value="Compare Files"></p>
-								</div>
+									
+								</div> -->
 							</form>								
 						</div>
 						<div class="col l3"></div>
@@ -106,7 +111,7 @@
 			</div>
 			<div class="footer-copyright">
 			  <div class="container">
-			  	<p>&copy;2016 Check4Duplicates. Powered by <a class="orange-text text-lighten-3" target = "_blank" href= "http://versified.xyz">VersiTech</a> </p>
+			  	<p>&copy;2016 File Cleaner. Powered by <a class="orange-text text-lighten-3" target = "_blank" href= "http://versified.xyz">VersiTech</a> </p>
 			  </div>
 			</div>
 		</footer>
