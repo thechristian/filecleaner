@@ -8,6 +8,9 @@
     <title>File Cleaner</title>
     <link rel="stylesheet" type="text/css" href="static/dist/materialize/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <!--<script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/scripting.js"></script> -->
+
 </head>
  
 	<body>
@@ -43,16 +46,16 @@
 									<div class="file-field input-field">
 										<input type="checkbox" name="checkdup" value="checked">Check for duplicates<br>
 										<!--<input type="file" name="dataFile" required = "required"/><br> -->
-										<input type="checkbox" name="pnumbers" value="checked"> Phone Number validation<br>
+										<input type="checkbox" id="phone" name="pnumbers" value="checked"> Phone Number validation<br>
 										<div class="file-path-wrapper">
-											<input type="text" name="phonenumbercol" placeholder="Column Name">
+											<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name">
 										</div>
-										<input type="checkbox" name="emails" value="checked"> E-mail validation<br>
+										<input type="checkbox" id="email" name="emails" value="checked"> E-mail validation<br>
 										<div class="file-path-wrapper">
-											<input type="text" name="emailcol" placeholder="Column Name"> 
+											<input type="text" id="emailcol" name="emailcol" placeholder="Column Name"> 
 										</div>
-										<input type="checkbox" name="comparefiles" value="checked">Compare two files<br>
-        								Second file: <input type="file" name="dataFile2" required = "required"/>
+										<input type="checkbox" id="compare" name="comparefiles" value="checked">Compare two files<br>
+        								Second file: <input type="file" id="dfile2" name="dataFile2" required = "required"/>
 									</div>
 
 								</div>
