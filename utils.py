@@ -2,7 +2,7 @@ import random
 from datetime import datetime
 
 
-ALLOWED_EXTENSIONS = set(['csv', 'txt'])
+ALLOWED_EXTENSIONS = set(['csv', 'txt', 'xlsx', 'xls'])
 
 def get_random_id():
 	'''
