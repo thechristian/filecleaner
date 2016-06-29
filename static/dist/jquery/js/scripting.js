@@ -1,6 +1,7 @@
  $(document).ready(function() {
     $('input#emailcol, input#phonecol').characterCounter();
 
+        // hidding and unhidding fileds according to checked checkboxes
     $('input#phonecol').hide();
     $("input#test5").click(function(event) {
     if ($('input#test5').is(":checked"))
@@ -26,4 +27,10 @@
       $("#dfile2").hide();
   });
 
-  });
+
+    // Form Validation
+ 
+
+
+
+});
