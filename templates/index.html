@@ -36,12 +36,12 @@
 						<div class="col l6">
 
 							<!--File cleaning form-->
-							<form name="uploadfile" action="/checkduplicates" method="post" enctype="multipart/form-data">
+							<form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
 								<div>
 									<div class="card-panel center-align hoverable">
 										<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
 									</div>
-									<input type="file" name="dataFile" required = "required"/>
+									<input type="file" name="dataFile1" id="dfile1" required = "required"/>
 									<!--<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
 									</div>		 -->		
@@ -70,7 +70,7 @@
 											<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
 											<label for="compare">Compare Two Files</label>
 										</p>
-        								 <input type="file" id="dfile2" name="dataFile2" required = "required" />
+        								 <input type="file" id="dfile2" name="dataFile2" />
 									</div>
 
 								</div>
