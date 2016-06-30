@@ -10,7 +10,14 @@
     <link rel="stylesheet" type="text/css" href="static/dist/materialize/css/materialize.css">
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
     <script type="text/javascript" src="static/dist/jquery/js/jquery.min.js"></script>
-    <script type="text/javascript" src="static/dist/jquery/js/scripting.js"></script> 
+    <script type="text/javascript" src="static/dist/jquery/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="static/dist/jquery/js/scripting.js"></script>
+    <script type="text/javascript">
+    	$().ready(function() {
+
+  $("#cleanerForm").validate();
+});
+    </script>
 
 </head>
  
