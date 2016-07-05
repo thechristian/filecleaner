@@ -32,12 +32,33 @@
 
     $("#cleanerForm").validate({
       rules: {
-        dataFile1: {
-          required: true
-        }
+        dataFile1: "required",
+        phonenumbercol: {
+          required: "#test5:checked",
+          minlength: 20
+        },
+        emailcol: {
+          required: "#test6:checked",
+          minlength: 20
+        },
+        dataFile2: {
+          required: "#compare:checked"
+        },
+        
       },
       messages: {
-        dataFile1: "Please upload the required file"
+        dataFile1: "Please this file is required.",
+        phonenumbercol: {
+          required: "This field is needed",
+          minlength: "Enter atmost 20 characters for the column name."
+        },
+        emailcol: {
+          required: "This field is needed.",
+          minlength: "Enter atmost 20 characters for the column name."
+        },
+        dataFile2: {
+          required: "Please upload a second file to compare with."
+        },
       }
     });
 
