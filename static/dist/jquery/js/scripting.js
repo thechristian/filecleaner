@@ -29,8 +29,16 @@
 
 
     // Form Validation
- 
 
-
+    $("#cleanerForm").validate({
+      rules: {
+        dataFile1: {
+          required: true
+        }
+      },
+      messages: {
+        dataFile1: "Please upload the required file"
+      }
+    });
 
 });
