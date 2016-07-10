@@ -42,7 +42,7 @@
       },
       emailcol: {
         required: "#test6:checked",
-        minlength: 20
+        maxlength: 20
       },
       dataFile2: {
         required: "#compare:checked"
@@ -53,7 +53,7 @@
       dataFile1: "Please this file is required.",
       phonenumbercol: {
         required: "This field is needed",
-        minlength: "Enter atmost 20 characters for the column name."
+        maxlength: "Enter atmost 20 characters for the column name."
       },
       emailcol: {
         required: "This field is needed.",
@@ -64,5 +64,25 @@
       },
     }
   });
+
+  // $('#isubmit').click(function(){
+  // 	//check whether browser fully supports all File API
+  // 	if (window.File && window.FileReader && window.FileList && window.Blob){
+  // 		//get the file size and file type from file input field
+  // 		var fsize = $('#dfile1')[0].files[0].size;
+  //       var ftype = $('#dfile1')[0].files[0].type;
+  //       var fname = $('#dfile1')[0].files[0].name;
+
+  //       if (fsize>3048576) {
+  //       	alert("Type :"+ ftype +" | "+ fsize +" bites\n(File: "+fname+") Too big!");
+  //       }
+  //       else {
+  //       	con
+  //       }
+  // 	}
+  // 	else{
+  // 		alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+  // 	}
+  // });
 
 });
