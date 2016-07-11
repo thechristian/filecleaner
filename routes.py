@@ -110,7 +110,6 @@ def upload_file():
             # change to anything later
             return "nice"
 
-
         else:
             return "No options selected."
 
