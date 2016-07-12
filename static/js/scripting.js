@@ -36,6 +36,7 @@
   $("#cleanerForm").validate({
     rules: {
       dataFile1: "required",
+      sheetname: "required",
       phonenumbercol: {
         required: "#test5:checked",
         minlength: 20
@@ -51,6 +52,7 @@
     },
     messages: {
       dataFile1: "Please this file is required.",
+      sheetname: "This field is needed.",
       phonenumbercol: {
         required: "This field is needed",
         maxlength: "Enter atmost 20 characters for the column name."
@@ -62,27 +64,8 @@
       dataFile2: {
         required: "Please upload a second file to compare with."
       },
+
     }
   });
-
-  // $('#isubmit').click(function(){
-  // 	//check whether browser fully supports all File API
-  // 	if (window.File && window.FileReader && window.FileList && window.Blob){
-  // 		//get the file size and file type from file input field
-  // 		var fsize = $('#dfile1')[0].files[0].size;
-  //       var ftype = $('#dfile1')[0].files[0].type;
-  //       var fname = $('#dfile1')[0].files[0].name;
-
-  //       if (fsize>3048576) {
-  //       	alert("Type :"+ ftype +" | "+ fsize +" bites\n(File: "+fname+") Too big!");
-  //       }
-  //       else {
-  //       	con
-  //       }
-  // 	}
-  // 	else{
-  // 		alert("Please upgrade your browser, because your current browser lacks some new features we need!");
-  // 	}
-  // });
 
 });
