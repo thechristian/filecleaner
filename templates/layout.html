@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	{% block head %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<title>{% block title %}{% endblock %} | File Cleaner</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='dist/materialize/css/materialize.min.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='dist/materialize/css/materialize.css')}}">
+    {% endblock %}
+</head>
+	<body>
+	{% block navigation %}{% endblock %}
+		{# app CONTENT #}
+		<div class="section" id="index-banner">
+			<div class="container">
+				{% block content %}{% endblock %}
+			</div>			
+		</div>
+
+		{# app FOOTER #}
+		{% include "footer.html" %}
+		{% block scripts %}
+			<script src="static/dist/jquery/js/jquery.min.js"></script>
+			<script src="static/dist/materialize/js/materialize.js"></script>
+		{% endblock %}
+	</body>
+</html>

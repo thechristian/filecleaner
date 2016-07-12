@@ -1,141 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
- 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-    <title>File Cleaner</title>
-    <link rel="stylesheet" type="text/css" href="static/dist/materialize/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="static/dist/materialize/css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
-</head>
- 
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+	{# the super() call imports the main files referenced in the extended layout #}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+{% endblock %}
 	<body>
-		<nav class="light-blue darken-2" role="navigation">
-			<div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">File-Cleaner logo</a>
-			  <ul class="right hide-on-med-and-down">
-			    <li><a href="#">Navbar Link</a></li>
-			  </ul>
-
-			  <ul id="nav-mobile" class="side-nav">
-			    <li><a href="#">Navbar Link</a></li>
-			  </ul>
-			  <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-			</div>
-		</nav>
-
+		{% block navigation %}
+			{% include "navs/main.html" %}
+		{% endblock %}
 		<div class="section" id="index-banner">
 			<div class="container">
-				<br><br>
+				{% block content %}
 					<div class="row upload-config">
 						<div class="col l3"> &nbsp; </div>
 						<div class="col l6">
-
-							<!--File cleaning form-->
-							<form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
-								<div>
-									<div class="card-panel center-align hoverable">
-										<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
-									</div>
-									<input type="file" name="dataFile1" id="dfile1" required="required" />
-									<!--<div class="file-path-wrapper">
-										<input class="file-path validate" type="text">
-									</div>		 -->		
-
-									<div class="">
-										<p>
-											<input id="duplicates" class="filled-in" type="checkbox" name="checkdup" value="checked" />
-											<label for="duplicates">Check For Duplicates</label>
-										</p>
-										<!--<input type="file" name="dataFile" required = "required"/><br> -->
-										<p>
-											<input id="test5" type="checkbox" name="pnumbers" value="checked" />
-											<label for="test5">Validate Phone Numbers</label>
-										</p>
-										<div class="file-path-wrapper">
-											<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name" maxlength="20" />
-										</div>
-										<p>
-											<input type="checkbox" id="test6" name="emails" value="checked" />
-											<label for="test6">Validate E-mails</label>
-										</p>				
-										<div class="file-path-wrapper">
-											<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> 
-										</div>
-										<p>
-											<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
-											<label for="compare">Compare Two Files</label>
-										</p>
-        								 <input type="file" id="dfile2" name="dataFile2" />
-									</div>
-
-								</div>
-								<div class="input-field row">
-									<div class="col l8">&nbsp;</div>
-									<div class="col l4">
-										<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
-									</div>
-								</div>	
-							</form><br>
-
-							<!--file column validation form-->
-							<!--<form name="valfile" action="/valupload" method="post" enctype="multipart/form-data">
-
-							</form>	 -->
-
-								<!--Comparing two files form-->
-							<!-- <form name="uploadfile" action="/comparefiles" method="post" enctype="multipart/form-data">
-								<div>
-									
-								</div> -->
-							</form>								
+							{% include "forms/main.html" %}							
 						</div>
 						<div class="col l3"></div>
 					</div>
-				<br><br>
+				{% endblock %}
 			</div>			
 		</div>
-
-		<footer class="page-footer grey darken-3">
-			<div class="container">
-			  <div class="row">
-			    <div class="col l4 s12">
-			      <h5 class="white-text">VersiTech</h5>
-			      <p class="grey-text text-lighten-4" style="cursor:wait">
-			      We are a team of open minded individuals building solutions across the broad spectrum of 
-			      problems we encounter on a daily basis. This happens to be one of them.</p>
-			    </div>
-			    <div class="col l4 s12">
-			      <h5 class="white-text">Reach Us</h5>
-			      <ul>
-			        <li><a class="orange-text text-lighten-3" target="_blank" href="https://facebook.com/versified.xyz">Facebook</a></li>
-			        <li><a class="orange-text text-lighten-3" target="_blank" href="https://twitter.com/VersiTch">Twitter</a></li>
-			        <li><a class="orange-text text-lighten-3" target="_blank" href="https://www.pinterest.com/versitech/">Pinterest</a></li>
-			        <li><a class="orange-text text-lighten-3" target="_blank" href="http://plus.google.com/+VersifiedTechnology">Google Plus</a></li>
-			        <li><a class="orange-text text-lighten-3" target="_blank" href="https://blog.versified.xyz">Our Blog</a></li>
-			      </ul>
-			    </div>
-			    <div class="col l4 s12">
-			      <h5 class="white-text">Donate</h5>
-			      <p class="grey-text text-lighten-4" style="cursor:wait">
-			      Since this has been so helpful, why don't you take some time to reward us *self pat on the back*.
-			      Do take some time to share or simply let your friends in on this little helper you've come across. 
-			      We would really appreciate that.
-			      </p>
-			    </div>			    
-			  </div>
-			</div>
-			<div class="footer-copyright">
-			  <div class="container">
-			  	<p>&copy;2016 File Cleaner. Powered by <a class="orange-text text-lighten-3" target = "_blank" href= "http://versified.xyz/home">VersiTech</a> </p>
-			  </div>
-			</div>
-		</footer>
-
-		<script src="static/dist/jquery/js/jquery.min.js"></script>
-		<script src="static/dist/materialize/js/materialize.js"></script>
-    <script type="text/javascript" src="static/dist/jquery/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="static/js/scripting.js"></script>
+		{% block scripts %}
+			{{ super() }}
+			<script type="text/javascript" src="static/dist/jquery/js/jquery.validate.min.js"></script>
+			<script type="text/javascript" src="static/js/scripting.js"></script>
+		{% endblock %}
 	</body>
 </html>
