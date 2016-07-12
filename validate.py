@@ -6,6 +6,7 @@ invalidemailcol = []     # will contain entries that does not pass as a valid em
 emailkey = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$'
 phonenumbkey = "regex expression"
 
+
 def emailvalidator(x, y):
     i = 0
     filename = str(x)
