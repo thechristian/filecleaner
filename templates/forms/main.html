@@ -1,0 +1,46 @@
+<!--File cleaning form-->
+<form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
+	<div>
+		<div class="card-panel center-align hoverable">
+			<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
+		</div>
+		<input type="file" name="dataFile1" id="dfile1" required="required" />
+		<!--<div class="file-path-wrapper">
+			<input class="file-path validate" type="text">
+		</div>		 -->		
+
+		<div class="">
+			<p>
+				<input id="duplicates" class="filled-in" type="checkbox" name="checkdup" value="checked" />
+				<label for="duplicates">Check For Duplicates</label>
+			</p>
+			<!--<input type="file" name="dataFile" required = "required"/><br> -->
+			<p>
+				<input id="test5" type="checkbox" name="pnumbers" value="checked" />
+				<label for="test5">Validate Phone Numbers</label>
+			</p>
+			<div class="file-path-wrapper">
+				<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name" maxlength="20" />
+			</div>
+			<p>
+				<input type="checkbox" id="test6" name="emails" value="checked" />
+				<label for="test6">Validate E-mails</label>
+			</p>				
+			<div class="file-path-wrapper">
+				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> 
+			</div>
+			<p>
+				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
+				<label for="compare">Compare Two Files</label>
+			</p>
+			 <input type="file" id="dfile2" name="dataFile2" />
+		</div>
+
+	</div>
+	<div class="input-field row">
+		<div class="col l8">&nbsp;</div>
+		<div class="col l4">
+			<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
+		</div>
+	</div>	
+</form>
