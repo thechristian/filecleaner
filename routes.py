@@ -9,18 +9,13 @@ import random
 import datetime
 import hashlib
 import csv, _csv
+from utils import get_random_id
+from convertocsv import excel2csv
 
 app = Flask(__name__)
-size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024 #upload file size allowed 3MB
+size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
 
 ALLOWED_EXTENSIONS = set(['csv', 'xls', 'xlsx'])    # file extensions allowed
-
-for i in xrange(1):
-    timer = datetime.datetime.now()  # get date and time
-    timeAndDate = timer.isoformat()  # getting time and date without spaces
-    fullTime = timeAndDate.split(".")[0]  # removing unused string from the date and time
-    randomNumber = '%04.4f' % random.random()  # generate a random number to make the time unique
-    finalTimeAndDate = '-'.join([fullTime, randomNumber])  # add time and date to the random number
 
 # checking for appropriate file extensions
 
@@ -37,7 +32,7 @@ def main():
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
 def upload_file():
-    filepath1 = os.path.join('uploads', 'userFile1.csv-' + finalTimeAndDate)
+    filepath1 = os.path.join('uploads', 'userFile1.csv-' + get_random_id())
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
         if request.form.get('checkdup'):
@@ -65,8 +60,8 @@ def upload_file():
         if request.form.get('comparefiles'):
             compf1 = request.files['dataFile1']  # get file name from web interface
             comp2 = request.files['dataFile2']  # get file name from web interface
-            compfilepath1 = os.path.join('uploads', 'compUserFile1-' + finalTimeAndDate)
-            compfilepath2 = os.path.join('uploads', 'compUserFile2-' + finalTimeAndDate)
+            compfilepath1 = os.path.join('uploads', 'compUserFile1-' + get_random_id())
+            compfilepath2 = os.path.join('uploads', 'compUserFile2-' + get_random_id())
 
             if size:
                 compf1.save(compfilepath1)  # save file to destination
