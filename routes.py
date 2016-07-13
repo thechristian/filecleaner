@@ -17,8 +17,6 @@ size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size al
 
 ALLOWED_EXTENSIONS = set(['csv', 'xls', 'xlsx'])    # file extensions allowed
 
-# checking for appropriate file extensions
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -32,23 +30,19 @@ def main():
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
 def upload_file():
-    filepath1 = os.path.join('uploads', 'userFile1.csv-' + get_random_id())
+    filepath1 = os.path.join('uploads', 'frmxl2csv-' + get_random_id())
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
+        f1.save(filepath1)  # save file to destination
+        sheetname = request.form['sheetname']
+        excel2csv(filepath1, sheetname)
         if request.form.get('checkdup'):
 
-            # call conversion function here
-
-            f1.save(filepath1)  # save file to destination
-            # f = request.files['dataFile1']   # get file name from web interface
-            if tocsv and allowed_file(tocsv.filename):
-                # filepath = os.path.join('uploaded', 'userFile.csv-' + finalTimeAndDate)
-                # os.rename('userFile.csv', 'userFile.csv-' + finalTimeAndDate)
-                # f.save(filepath)   # save file to destination
-                checkForDuplicate(filepath1)     # calling the check4duplicate function
+            if csvfile and allowed_file(csvfile.filename):
+                checkForDuplicate(csvfile)     # calling the check4duplicate function
 
                 newfilesize = os.path.getsize('newfiles/newFile.csv')  # file size in bytes from separated entries
-                uploadedfilesize = os.path.getsize(filepath1)  # file size from uploaded user file
+                uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
                 if newfilesize == uploadedfilesize:
                     return render_template('noduplicate.html')
                 else:
@@ -83,9 +77,9 @@ def upload_file():
         elif request.form.get('emails'):
             # call conversion function here
 
-            f1.save(filepath1)  # save file to destination
+            # f1.save(filepath1)  # save file to destination
             col = request.form['emailcol']
-            emailvalidator(filepath1, col)
+            emailvalidator(csvfile, col)
 
             # change to anything later
             return "nice"
