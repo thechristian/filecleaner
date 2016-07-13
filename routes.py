@@ -15,7 +15,7 @@ from convertocsv import excel2csv
 app = Flask(__name__)
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
 
-ALLOWED_EXTENSIONS = set(['csv', 'xls', 'xlsx'])    # file extensions allowed
+ALLOWED_EXTENSIONS = set(['csv','xls', 'xlsx'])    # file extensions allowed
 
 
 def allowed_file(filename):
@@ -35,10 +35,10 @@ def upload_file():
         f1 = request.files['dataFile1']  # get file name from web interface
         f1.save(filepath1)  # save file to destination
         sheetname = request.form['sheetname']
-        excel2csv(filepath1, sheetname)
+        csvfile = excel2csv(filepath1, sheetname)
         if request.form.get('checkdup'):
 
-            if csvfile and allowed_file(csvfile.filename):
+            if csvfile and allowed_file(csvfile):
                 checkForDuplicate(csvfile)     # calling the check4duplicate function
 
                 newfilesize = os.path.getsize('newfiles/newFile.csv')  # file size in bytes from separated entries
