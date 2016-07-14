@@ -39,10 +39,10 @@ def upload_file():
                 sheetname = request.form['sheetname']
                 csvfile = excel2csv(filepath1, sheetname)
                 if csvfile and allowed_file(csvfile):
-                    checkForDuplicate(csvfile)     # calling the check4duplicate function
+                    checkForDuplicate(csvfile, sheetname)     # calling the check4duplicate function
 
-                    noduplicatefilesize = os.path.getsize('noduplicates/noduplicates.csv')  # file size in bytes from separated entries
-                    uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
+                    noduplicatefilesize = os.path.getsize('noduplicates/noduplicates.xlsx')  # file size in bytes from separated entries
+                    uploadedfilesize = os.path.getsize(filepath1)  # file size from uploaded user file
                     if noduplicatefilesize == uploadedfilesize:
                         return render_template('noduplicate.html')
                     else:
