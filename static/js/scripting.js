@@ -36,7 +36,7 @@
   $("#cleanerForm").validate({
     rules: {
       dataFile1: "required",
-      sheetname: "required",
+      // sheetname: 
       phonenumbercol: {
         required: "#test5:checked",
         minlength: 20
@@ -52,7 +52,7 @@
     },
     messages: {
       dataFile1: "Please this file is required.",
-      sheetname: "This field is needed.",
+      // sheetname: "This field is needed.",
       phonenumbercol: {
         required: "This field is needed",
         maxlength: "Enter atmost 20 characters for the column name."
