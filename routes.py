@@ -33,23 +33,25 @@ def upload_file():
     filepath1 = os.path.join('uploads', 'frmxl2csv-' + get_random_id())
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
-        f1.save(filepath1)  # save file to destination
-        sheetname = request.form['sheetname']
-        csvfile = excel2csv(filepath1, sheetname)
         if request.form.get('checkdup'):
+            try:
+                f1.save(filepath1)  # save file to destination
+                sheetname = request.form['sheetname']
+                csvfile = excel2csv(filepath1, sheetname)
+                if csvfile and allowed_file(csvfile):
+                    checkForDuplicate(csvfile)     # calling the check4duplicate function
 
-            if csvfile and allowed_file(csvfile):
-                checkForDuplicate(csvfile)     # calling the check4duplicate function
+                    noduplicatefilesize = os.path.getsize('noduplicates/noduplicates.csv')  # file size in bytes from separated entries
+                    uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
+                    if noduplicatefilesize == uploadedfilesize:
+                        return render_template('noduplicate.html')
+                    else:
+                        return render_template('success.html')
 
-                newfilesize = os.path.getsize('newfiles/newFile.csv')  # file size in bytes from separated entries
-                uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
-                if newfilesize == uploadedfilesize:
-                    return render_template('noduplicate.html')
                 else:
-                    return render_template('success.html')
-
-            else:
-                return "Error! File not supported. Upload the appropriate file type."
+                    return "Error! File not supported. Upload the appropriate file type."
+            except:
+                return "Sheet name not given!"
 
         if request.form.get('comparefiles'):
             compf1 = request.files['dataFile1']  # get file name from web interface
@@ -60,13 +62,8 @@ def upload_file():
             if size:
                 compf1.save(compfilepath1)  # save file to destination
                 comp2.save(compfilepath2)
-
-                checkFile(compfilepath1, compfilepath2)
-                hashfilesize1 = os.path.getsize('hashes/hashvalue1')
-                hashfilesize2 = os.path.getsize('hashes/hashvalue1')
-
-                # comparing hashed value file sizes
-                if hashfilesize1 == hashfilesize2:
+                hashvalue1, hashvalue2, = checkFile(compfilepath1, compfilepath2)
+                if hashvalue1 == hashvalue2:
                     return render_template('same.html')
 
                 else:
@@ -75,15 +72,16 @@ def upload_file():
                 return "Error! File size too big. Check file and try again"
 
         elif request.form.get('emails'):
-            # call conversion function here
-
-            # f1.save(filepath1)  # save file to destination
-            col = request.form['emailcol']
-            emailvalidator(csvfile, col)
-
-            # change to anything later
-            return "nice"
-
+            try:
+                sheetname = request.form['sheetname']
+                csvfile = excel2csv(filepath1, sheetname)
+                # f1.save(filepath1)  # save file to destination
+                col = request.form['emailcol']
+                emailvalidator(csvfile, col)
+                # change to anything later
+                return "nice"
+            except:
+                return "Sheet name not given!"
         else:
             return "No options selected."
 
