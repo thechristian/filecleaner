@@ -18,3 +18,8 @@ def checkFile(file1, file2):
     hashfile2 = open('hashes/hashvalue2', 'w')
     hashfile1.write(hashed1)  # saving the hash values to the file
     hashfile2.write(hashed2)
+    hashstring1 = str(hashed1)
+    hashstring2 = str(hashed2)
+    return hashstring1, hashstring2
+    # hashfile1.close()
+    # hashfile2.close()
