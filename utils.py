@@ -1,6 +1,11 @@
 import random
 from datetime import datetime
-
+import pandas as pd
+from pandas import DataFrame
+import xlrd
+import xlwt
+import csv
+import os
 
 ALLOWED_EXTENSIONSxl = set(['xls', 'xlsx'])    # file extensions allowed
 ALLOWED_EXTENSIONScsv = set('csv')
@@ -28,5 +33,12 @@ def get_random_id():
 	    randomNumber = '%04.4f' % random.random()
         # add time and date to the random number
 	    finalTimeAndDate = '-'.join([fullTime, randomNumber])
-
     return finalTimeAndDate
+
+def excel_to_csv(fname, sname):
+    file_name = str(fname)
+    worksheet_name = str(sname)
+    file_contents = pd.read_excel(file_name, worksheet_name)
+    file_path = os.path.join('uploads', 'frmxl2csv-' + get_random_id() + '.csv')
+    file_contents.to_csv(file_path, index=False)
+    return file_path
