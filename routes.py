@@ -10,8 +10,8 @@ import random
 import datetime
 import hashlib
 import csv, _csv
-from utils import get_random_id, allowed_filecsv, allowed_filexl
-from convertocsv import excel2csv
+from utils import get_random_id, allowed_filecsv, allowed_filexl, excel_to_csv
+
 
 uploadFolder = 'uploads'
 
@@ -38,11 +38,23 @@ def upload_file():
                     filename = secure_filename(f1.filename)
                     f1.save(os.path.join(app.config['uploadFolder'], filename))
                     # f1.save(filepath1)  # save file to destination
-                    csvfile = excel2csv(filename, sheetname)
-                    checkForDuplicatexl(csvfile, sheetname)     # calling the check4duplicate function
+                    csvfile = excel_to_csv(filename, sheetname)
+                    checkForDuplicatexl(csvfile)
 
                     noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
                     uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
+                    if noduplicatefilesize == uploadedfilesize:
+                        return render_template('noduplicate.html')
+                    else:
+                        return render_template('success.html')
+
+                elif f1 and allowed_filecsv(f1.filename):
+                    filename = secure_filename(f1.filename)
+                    f1.save(os.path.join(app.config['uploadFolder'], filename))
+                    checkForDuplicatexl(filename)
+
+                    noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
+                    uploadedfilesize = os.path.getsize(filename)
                     if noduplicatefilesize == uploadedfilesize:
                         return render_template('noduplicate.html')
                     else:
