@@ -30,40 +30,41 @@ def upload_file():
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
         if request.form.get('checkdup'):
-            try:
+                # f1.save(filepath1)  # save file to destination
+                # sheetname = request.form['sheetname']
+                # csvfile = excel_to_csv(filepath1, sheetname)
+            if f1 and allowed_filexl(f1.filename):
+                filename = secure_filename(f1.filename)
+                f1.save(os.path.join(app.config['uploadFolder'], filename))
                 # f1.save(filepath1)  # save file to destination
                 sheetname = request.form['sheetname']
-                # csvfile = excel2csv(filepath1, sheetname)
-                if f1 and allowed_filexl(f1.filename):
-                    filename = secure_filename(f1.filename)
-                    f1.save(os.path.join(app.config['uploadFolder'], filename))
-                    # f1.save(filepath1)  # save file to destination
+                if sheetname == "":
+                    return " Sheet name not given!"
+                else:
                     csvfile = excel_to_csv(filename, sheetname)
                     checkForDuplicatexl(csvfile)
 
-                    noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
-                    uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
-                    if noduplicatefilesize == uploadedfilesize:
-                        return render_template('noduplicate.html')
-                    else:
-                        return render_template('success.html')
-
-                elif f1 and allowed_filecsv(f1.filename):
-                    filename = secure_filename(f1.filename)
-                    f1.save(os.path.join(app.config['uploadFolder'], filename))
-                    checkForDuplicatexl(filename)
-
-                    noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
-                    uploadedfilesize = os.path.getsize(filename)
-                    if noduplicatefilesize == uploadedfilesize:
-                        return render_template('noduplicate.html')
-                    else:
-                        return render_template('success.html')
-
+                noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
+                uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
+                if noduplicatefilesize == uploadedfilesize:
+                    return render_template('noduplicate.html')
                 else:
-                    return "Error! File not supported. Upload the appropriate file type."
-            except ValueError:
-                return "Sheet name not given!"
+                    return render_template('success.html')
+
+            elif f1 and allowed_filecsv(f1.filename):
+                filename = secure_filename(f1.filename)
+                f1.save(os.path.join(app.config['uploadFolder'], filename))
+                checkForDuplicatexl(filename)
+
+                noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
+                uploadedfilesize = os.path.getsize(filename)
+                if noduplicatefilesize == uploadedfilesize:
+                    return render_template('noduplicate.html')
+                else:
+                    return render_template('success.html')
+
+            else:
+                return "Error! File not supported. Upload the appropriate file type."
 
         if request.form.get('comparefiles'):
             compf1 = request.files['dataFile1']  # get file name from web interface
@@ -84,16 +85,16 @@ def upload_file():
                 return "Error! File size too big. Check file and try again"
 
         elif request.form.get('emails'):
-            try:
-                sheetname = request.form['sheetname']
-                csvfile = excel2csv(filepath1, sheetname)
+            sheetname = request.form['sheetname']
+            if sheetname != "":
+                csvfile = excel_to_csv(filepath1, sheetname)
                 # f1.save(filepath1)  # save file to destination
                 col = request.form['emailcol']
                 emailvalidator(csvfile, col)
                 # change to anything later
-                return "nice"
-            except:
+            else:
                 return "Sheet name not given!"
+            return "nice"
         else:
             return "No options selected."
 
