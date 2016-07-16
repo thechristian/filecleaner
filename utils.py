@@ -2,6 +2,20 @@ import random
 from datetime import datetime
 
 
+ALLOWED_EXTENSIONSxl = set(['xls', 'xlsx'])    # file extensions allowed
+ALLOWED_EXTENSIONScsv = set('csv')
+
+
+def allowed_filexl(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONSxl
+
+
+def allowed_filecsv(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONScsv
+
+
 def get_random_id():
     for i in xrange(1):
         # get date and time
