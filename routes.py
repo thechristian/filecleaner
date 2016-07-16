@@ -1,27 +1,23 @@
-from dupEntries import checkForDuplicate
+from dupEntries import checkForDuplicatexl, checkForDuplicatecsv
 from compareFiles import checkFile
 import re
 from validate import emailvalidator, phonenumbvalidator
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 import sys
 import random
 import datetime
 import hashlib
 import csv, _csv
-from utils import get_random_id
+from utils import get_random_id, allowed_filecsv, allowed_filexl
 from convertocsv import excel2csv
+
+uploadFolder = 'uploads'
 
 app = Flask(__name__)
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
-
-ALLOWED_EXTENSIONS = set(['csv','xls', 'xlsx'])    # file extensions allowed
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
+app.config['uploadFolder'] = uploadFolder
 
 @app.route("/")
 def main():
@@ -30,19 +26,23 @@ def main():
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
 def upload_file():
-    filepath1 = os.path.join('uploads', 'frmxl2csv-' + get_random_id())
+    # filepath1 = os.path.join('uploads/')
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
         if request.form.get('checkdup'):
             try:
-                f1.save(filepath1)  # save file to destination
+                # f1.save(filepath1)  # save file to destination
                 sheetname = request.form['sheetname']
-                csvfile = excel2csv(filepath1, sheetname)
-                if csvfile and allowed_file(csvfile):
-                    checkForDuplicate(csvfile, sheetname)     # calling the check4duplicate function
+                # csvfile = excel2csv(filepath1, sheetname)
+                if f1 and allowed_filexl(f1.filename):
+                    filename = secure_filename(f1.filename)
+                    f1.save(os.path.join(app.config['uploadFolder'], filename))
+                    # f1.save(filepath1)  # save file to destination
+                    csvfile = excel2csv(filename, sheetname)
+                    checkForDuplicatexl(csvfile, sheetname)     # calling the check4duplicate function
 
-                    noduplicatefilesize = os.path.getsize('noduplicates/noduplicates.xlsx')  # file size in bytes from separated entries
-                    uploadedfilesize = os.path.getsize(filepath1)  # file size from uploaded user file
+                    noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
+                    uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
                     if noduplicatefilesize == uploadedfilesize:
                         return render_template('noduplicate.html')
                     else:
@@ -50,7 +50,7 @@ def upload_file():
 
                 else:
                     return "Error! File not supported. Upload the appropriate file type."
-            except:
+            except ValueError:
                 return "Sheet name not given!"
 
         if request.form.get('comparefiles'):
