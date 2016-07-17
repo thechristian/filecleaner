@@ -35,13 +35,13 @@ def upload_file():
                 # csvfile = excel_to_csv(filepath1, sheetname)
             if f1 and allowed_filexl(f1.filename):
                 filename = secure_filename(f1.filename)
-                f1.save(os.path.join(app.config['uploadFolder'], filename))
+                upfname = f1.save(os.path.join(app.config['uploadFolder'], get_random_id() + filename))
                 # f1.save(filepath1)  # save file to destination
                 sheetname = request.form['sheetname']
                 if sheetname == "":
                     return " Sheet name not given!"
                 else:
-                    csvfile = excel_to_csv(filename, sheetname)
+                    csvfile = excel_to_csv(upfname, sheetname)
                     checkForDuplicatexl(csvfile)
 
                 noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
@@ -53,8 +53,8 @@ def upload_file():
 
             elif f1 and allowed_filecsv(f1.filename):
                 filename = secure_filename(f1.filename)
-                f1.save(os.path.join(app.config['uploadFolder'], filename))
-                checkForDuplicatexl(filename)
+                f1.save(os.path.join(app.config['uploadFolder'], get_random_id() + filename))
+                checkForDuplicatecsv(filename)
 
                 noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
                 uploadedfilesize = os.path.getsize(filename)
@@ -87,7 +87,7 @@ def upload_file():
         elif request.form.get('emails'):
             sheetname = request.form['sheetname']
             if sheetname != "":
-                csvfile = excel_to_csv(filepath1, sheetname)
+                csvfile = excel_to_csv(filepath1, sheetname) # set path properly
                 # f1.save(filepath1)  # save file to destination
                 col = request.form['emailcol']
                 emailvalidator(csvfile, col)
