@@ -8,7 +8,7 @@ import csv
 import os
 
 ALLOWED_EXTENSIONSxl = set(['xls', 'xlsx'])    # file extensions allowed
-ALLOWED_EXTENSIONScsv = set('csv')
+ALLOWED_EXTENSIONScsv = set(['csv'])
 
 
 def allowed_filexl(filename):
@@ -36,9 +36,9 @@ def get_random_id():
     return finalTimeAndDate
 
 def excel_to_csv(fname, sname):
-    file_name = str(fname)
+    # file_name = str(fname)
     worksheet_name = str(sname)
-    file_contents = pd.read_excel(file_name, worksheet_name)
+    file_contents = pd.read_excel(fname, worksheet_name, engine='xlrd') # search for engine
     file_path = os.path.join('uploads', 'frmxl2csv-' + get_random_id() + '.csv')
     file_contents.to_csv(file_path, index=False)
     return file_path
