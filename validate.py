@@ -21,7 +21,7 @@ def emailvalidator(x, y):
                 matchemail = checkemail.group()
                 validemail.append(matchemail)
                 emailfile = open('emails/validemails.csv', 'w')  # create a file to contain valid emails
-                dataframe = pd.DataFrame(validemail, columns=["Valid Emails"])
+                dataframe = pd.DataFrame(validemail, columns=["Valid Emails"])  # locating the col.
                 dataframe.to_csv(emailfile, index=False)
                 # emailfile.write(''.join(validemail))  # save to the file
             else:
