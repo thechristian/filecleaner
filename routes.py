@@ -42,7 +42,7 @@ def upload_file():
                     return " Sheet name not given!"
                 else:
                     csvfile = excel_to_csv(upfname, sheetname)
-                    checkForDuplicatexl(csvfile)
+                    checkForDuplicatexl(csvfile, sheetname)
 
                 noduplicatefilesize = os.path.getsize('duplicates/duplicates.xlsx')  # file size in bytes from separated entries
                 uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
@@ -53,8 +53,8 @@ def upload_file():
 
             elif f1 and allowed_filecsv(f1.filename):
                 filename = secure_filename(f1.filename)
-                f1.save(os.path.join(app.config['uploadFolder'], get_random_id() + filename))
-                checkForDuplicatecsv(filename)
+                upfname = f1.save(os.path.join(app.config['uploadFolder'], get_random_id() + filename))
+                checkForDuplicatecsv(upfname)
 
                 noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
                 uploadedfilesize = os.path.getsize(filename)
