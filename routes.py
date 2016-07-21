@@ -13,11 +13,9 @@ import csv, _csv
 from utils import get_random_id, allowed_filecsv, allowed_filexl, excel_to_csv
 
 
-uploadFolder = 'uploads'
-
 app = Flask(__name__)
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
-app.config['uploadFolder'] = uploadFolder
+app.config['uploadFolder'] = 'uploads'
 
 @app.route("/")
 def main():
@@ -35,7 +33,8 @@ def upload_file():
                 # csvfile = excel_to_csv(filepath1, sheetname)
             if f1 and allowed_filexl(f1.filename):
                 filename = secure_filename(f1.filename)
-                upfname = f1.save(os.path.join(app.config['uploadFolder'], get_random_id() + filename))
+                upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
+                f1.save(upfname)
                 # f1.save(filepath1)  # save file to destination
                 sheetname = request.form['sheetname']
                 if sheetname == "":
