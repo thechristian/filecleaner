@@ -13,7 +13,7 @@ import csv, _csv
 from utils import get_random_id, allowed_filecsv, allowed_filexl, excel_to_csv
 
 
-uploadFolder = 'uploads'
+uploadFolder = 'uploads/'
 
 app = Flask(__name__)
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
