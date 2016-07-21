@@ -2,8 +2,8 @@ import random
 from datetime import datetime
 import pandas as pd
 from pandas import DataFrame
-import xlrd
-import xlwt
+# import xlrd
+# import xlwt
 import csv
 import os
 
