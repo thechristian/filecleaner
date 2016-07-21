@@ -1,7 +1,9 @@
 # project specific
-newfiles
-cleaned
+newfiles/**
+cleaned/**
 uploads/**
+duplicates/**
+noduplicates/**
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
