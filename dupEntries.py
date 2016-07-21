@@ -11,7 +11,7 @@ def checkForDuplicatexl(location, sname):
     noduplicates = df.loc[df['Is_Duplicated'] == False]
     duplicates = df.loc[df['Is_Duplicated'] == True]
     del noduplicates['Is_Duplicated']
-    writer1 = pd.ExcelWriter('noduplicates/noduplicates.xlsx', engine='xlsxwriter')
+    writer1 = pd.ExcelWriter('noduplicates/noduplicates.xlsx')
     noduplicates.to_excel(writer1, sheet_name=sname, index=False)
     writer1.save()
     del duplicates['Is_Duplicated']
