@@ -38,7 +38,7 @@ def get_random_id():
 def excel_to_csv(fname, sname):
     # file_name = str(fname)
     worksheet_name = str(sname)
-    file_contents = pd.read_excel(fname, worksheet_name)  # search for engine
+    file_contents = pd.read_excel(fname, worksheet_name)
     file_path = os.path.join('uploads', 'frmxl2csv-' + get_random_id() + '.csv')
     file_contents.to_csv(file_path, index=False)
     return file_path
