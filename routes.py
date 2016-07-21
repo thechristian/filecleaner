@@ -88,10 +88,15 @@ def upload_file():
             sheetname = request.form['sheetname']
 
             if sheetname != "":
-                csvfile = excel_to_csv(filepath1, sheetname)  # set path properly
-                # f1.save(filepath1)  # save file to destination
-                col = request.form['emailcol']
-                emailvalidator(csvfile, col)
+                if f1 and allowed_filexl(f1.filename):
+                    filename = secure_filename(f1.filename)
+                    upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
+                    f1.save(upfname)
+                    csvfile = excel_to_csv(upfname, sheetname)  # set path properly
+                    col = request.form['emailcol']
+                    emailvalidator(csvfile, col)
+                else:
+                    return "File not supported!"
                 # change to anything later
             else:
                 return "Sheet name not given!"
