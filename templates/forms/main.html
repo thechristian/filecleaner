@@ -14,20 +14,27 @@
 				<input type="text" id="sheetnameid" name="sheetname" placeholder="Sheet Name is required if uploading an Excel File" maxlength="20" />
 			</div>
 			<p>
-				<input id="duplicates" class="filled-in" type="checkbox" name="checkdup" value="checked" />
-				<label for="duplicates">Check For Duplicates</label>
+				<input id="duplicates" class="filled-in" type="checkbox" name="check_dup_in_rows" value="checked" />
+				<label for="duplicates">Check Duplicates In Rows</label>
 			</p>
+			<p>
+				<input id="dupInCols" class="filled-in" type="checkbox" name="dupInCols" value="checked" />
+				<label for="dupInCols">Check Duplicates In A Column</label>
+			</p>
+			<div class="file-path-wrapper">
+				<input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" /> 
+			</div>
 			<!--<input type="file" name="dataFile" required = "required"/><br> -->
 			<p>
-				<input id="test5" type="checkbox" name="pnumbers" value="checked" />
-				<label for="test5">Validate Phone Numbers</label>
+				<input id="validatefonNum" class="filled-in" type="checkbox" name="pnumbers" value="checked" />
+				<label for="validatefonNum">Validate Phone Numbers</label>
 			</p>
 			<div class="file-path-wrapper">
 				<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name" maxlength="20" />
 			</div>
 			<p>
-				<input type="checkbox" id="test6" name="emails" value="checked" />
-				<label for="test6">Validate E-mails</label>
+				<input type="checkbox" class="filled-in" id="validateEmails" name="emails" value="checked" />
+				<label for="validateEmails">Validate E-mails</label>
 			</p>				
 			<div class="file-path-wrapper">
 				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> 
