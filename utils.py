@@ -36,9 +36,15 @@ def get_random_id():
     return finalTimeAndDate
 
 def excel_to_csv(fname, sname):
-    # file_name = str(fname)
-    worksheet_name = str(sname)
-    file_contents = pd.read_excel(fname, worksheet_name)
-    file_path = os.path.join('uploads', 'frmxl2csv-' + get_random_id() + '.csv')
-    file_contents.to_csv(file_path, index=False)
+    file_name = str(fname)
+    reading_Excel = pd.ExcelFile(file_name)
+    sheet_list = reading_Excel.sheet_names
+    if sname in sheet_list:
+        # file_name = str(fname)
+        worksheet_name = str(sname)
+        file_contents = pd.read_excel(fname, worksheet_name)
+        file_path = os.path.join('uploads', 'frmxl2csv-' + get_random_id() + '.csv')
+        file_contents.to_csv(file_path, index=False)
+    else:
+        return "Sheet does not exist."
     return file_path
