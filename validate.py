@@ -31,7 +31,6 @@ def emailvalidator(x, y):
                 invalidemailfile = open('emails/emailcolnum.csv', 'w')  # create a file to contain invalid emails col numbs
                 dataframe = pd.DataFrame(invalidemailcol, columns=["Invalid Email Column Numbers"])
                 dataframe.to_csv(invalidemailfile, index=False)
-                # invalidemailfile.write(''.join(invalidemailcol))
     else:
         return "Column name does not exist"
 
