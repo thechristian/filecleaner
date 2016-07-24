@@ -5,17 +5,25 @@
   $('input#emailcol, input#phonecol').characterCounter();
 
       // hidding and unhidding fileds according to checked checkboxes
+  $('input#dupcolid').hide();
+  $("input#dupInCols").click(function(event) {
+  if ($('input#dupInCols').is(":checked"))
+    $("input#dupcolid").show();
+  else
+    $("#dupcolid").hide();
+  });
+
   $('input#phonecol').hide();
-  $("input#test5").click(function(event) {
-  if ($('input#test5').is(":checked"))
+  $("input#validatefonNum").click(function(event) {
+  if ($('input#validatefonNum').is(":checked"))
     $("input#phonecol").show();
   else
     $("#phonecol").hide();
   });
 
   $('input#emailcol').hide();
-  $("input#test6").click(function(event) {
-  if ($('input#test6').is(":checked"))
+  $("input#validateEmails").click(function(event) {
+  if ($('input#validateEmails').is(":checked"))
     $("input#emailcol").show();
   else
     $("#emailcol").hide();
@@ -33,16 +41,22 @@
 
   // Form Validation
 
+
   $("#cleanerForm").validate({
     rules: {
       dataFile1: "required",
-      // sheetname: 
+      
+      dupcolname: {
+        required: "#dupInCols:checked",
+        maxlength: 20
+      },
+
       phonenumbercol: {
-        required: "#test5:checked",
-        minlength: 20
+        required: "#validatefonNum:checked",
+        maxlength: 20
       },
       emailcol: {
-        required: "#test6:checked",
+        required: "#validateEmails:checked",
         maxlength: 20
       },
       dataFile2: {
@@ -52,14 +66,17 @@
     },
     messages: {
       dataFile1: "Please this file is required.",
-      // sheetname: "This field is needed.",
+      dupcolname: {
+        required: "This field is needed",
+        maxlength: "Enter atmost 20 characters for the column name"
+      },
       phonenumbercol: {
         required: "This field is needed",
         maxlength: "Enter atmost 20 characters for the column name."
       },
       emailcol: {
         required: "This field is needed.",
-        minlength: "Enter atmost 20 characters for the column name."
+        maxlength: "Enter atmost 20 characters for the column name."
       },
       dataFile2: {
         required: "Please upload a second file to compare with."
