@@ -24,18 +24,13 @@ def main():
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
 def upload_file():
-    # filepath1 = os.path.join('uploads/')
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
-        if request.form.get('checkdup'):
-                # f1.save(filepath1)  # save file to destination
-                # sheetname = request.form['sheetname']
-                # csvfile = excel_to_csv(filepath1, sheetname)
+        if request.form.get('check_dup_in_rows'):
             if f1 and allowed_filexl(f1.filename):
                 filename = secure_filename(f1.filename)
                 upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
                 f1.save(upfname)
-                # f1.save(filepath1)  # save file to destination
                 sheetname = request.form['sheetname']
                 if sheetname == "":
                     return " Sheet name not given!"
@@ -68,14 +63,16 @@ def upload_file():
 
         if request.form.get('comparefiles'):
             compf1 = request.files['dataFile1']  # get file name from web interface
-            comp2 = request.files['dataFile2']  # get file name from web interface
-            compfilepath1 = os.path.join('uploads', 'compUserFile1-' + get_random_id())
-            compfilepath2 = os.path.join('uploads', 'compUserFile2-' + get_random_id())
+            compf2 = request.files['dataFile2']  # get file name from web interface
+            filename1 = secure_filename(compf1.filename)
+            filename2 = secure_filename(compf2.filename)
+            upfname1 = os.path.join(app.config['uploadFolder'], get_random_id() + 'compf1-' + filename1)
+            upfname2 = os.path.join(app.config['uploadFolder'], get_random_id() + 'compf2-' + filename2)
 
             if size:
-                compf1.save(compfilepath1)  # save file to destination
-                comp2.save(compfilepath2)
-                hashvalue1, hashvalue2, = checkFile(compfilepath1, compfilepath2)
+                compf1.save(upfname1)  # save file to destination
+                compf2.save(upfname2)
+                hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
                 if hashvalue1 == hashvalue2:
                     return render_template('same.html')
 
