@@ -1,4 +1,4 @@
-from dupEntries import checkForDuplicatexl, checkForDuplicatecsv
+from dupEntries import checkForDuplicatexl, checkForDuplicatecsv, checkDuplicateInCol
 from compareFiles import checkFile
 import re
 from validate import emailvalidator, phonenumbvalidator
@@ -16,7 +16,10 @@ from utils import get_random_id, allowed_filecsv, allowed_filexl, excel_to_csv
 app = Flask(__name__)
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
 app.config['uploadFolder'] = 'uploads'
-
+SheetNameError = "Sheet name not provided"
+FileNotSupportedError = "Error! File not supported. Upload the appropriate file type."
+FileSizeError = "Error! File size too big. Check file and try again"
+ColumnNameError = "Column name not provided"
 @app.route("/")
 def main():
     return render_template('index.html')  # web interface - form
@@ -33,7 +36,7 @@ def upload_file():
                 f1.save(upfname)
                 sheetname = request.form['sheetname']
                 if sheetname == "":
-                    return " Sheet name not given!"
+                    return SheetNameError
                 else:
                     csvfile = excel_to_csv(upfname, sheetname)
                     checkForDuplicatexl(csvfile, sheetname)
@@ -44,23 +47,23 @@ def upload_file():
                     return render_template('noduplicate.html')
                 else:
                     return render_template('success.html')
-
-            elif f1 and allowed_filecsv(f1.filename):
-                filename = secure_filename(f1.filename)
-                upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
-                f1.save(upfname)
-                checkForDuplicatecsv(upfname)
-
-                noduplicatefilesize = os.path.getsize('duplicates/duplicates.csv')
-                uploadedfilesize = os.path.getsize(upfname)
-                if noduplicatefilesize == uploadedfilesize:
-                    return render_template('noduplicate.html')
-                else:
-                    return render_template('success.html')
-
             else:
-                return "Error! File not supported. Upload the appropriate file type."
+                return FileNotSupportedError
 
+        if request.form.get('dupInCols'):
+            sheetname = request.form['sheetname']
+            col = request.form['dupcolname']
+            if sheetname != "" and col != "":
+                if f1 and allowed_filexl(f1.filename):
+                    filename = secure_filename(f1.filename)
+                    upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
+                    f1.save(upfname)
+                    csvfile = excel_to_csv(upfname, sheetname)
+                    checkDuplicateInCol(csvfile, col)
+                else:
+                    return FileNotSupportedError
+            else:
+                return SheetNameError, ColumnNameError
         if request.form.get('comparefiles'):
             compf1 = request.files['dataFile1']  # get file name from web interface
             compf2 = request.files['dataFile2']  # get file name from web interface
@@ -79,25 +82,24 @@ def upload_file():
                 else:
                     return render_template('different.html')
             else:
-                return "Error! File size too big. Check file and try again"
+                return FileSizeError
 
         elif request.form.get('emails'):
             sheetname = request.form['sheetname']
-
-            if sheetname != "":
+            col = request.form['emailcol']
+            if sheetname != "" and col != "":
                 if f1 and allowed_filexl(f1.filename):
                     filename = secure_filename(f1.filename)
                     upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
                     f1.save(upfname)
-                    csvfile = excel_to_csv(upfname, sheetname)  # set path properly
-                    col = request.form['emailcol']
+                    csvfile = excel_to_csv(upfname, sheetname)
+
                     emailvalidator(csvfile, col)
                 else:
-                    return "File not supported!"
-                # change to anything later
+                    return FileNotSupportedError
             else:
-                return "Sheet name not given!"
-            return "nice"
+                return SheetNameError, ColumnNameError
+            return "nice"  # change to anything later
         else:
             return "No options selected."
 
