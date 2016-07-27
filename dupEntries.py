@@ -1,7 +1,7 @@
 import pandas as pd
 import xlsxwriter
 
-dup_col_numbers = []
+# dup_col_numbers = []
 
 def checkForDuplicatexl(file_location, sname):
     str(sname)
@@ -41,15 +41,15 @@ def checkDuplicateInCol(file_location, col_name):
     data_file = pd.read_csv(file_location, index_col=False)
     if col_name in data_file:
         col_entries = data_file.loc[:, col_name]
-        col_entries['Is_Duplicated'] = col_entry.duplicated()
-        for entry in col_entries['Is_Duplicated']:
+        col_entries['Duplicated'] = col_entries.duplicated()
+        for entry in col_entries['Duplicated']:
+            i = i + 1
             if entry == True:
-                i = i + 1
                 index = str(i)
                 dup_Entry_col_numbers.append(index)
 
         dup_Entry_col_file = open('duplicates/duplicateColNumbers.csv', 'w')
-        Dataframe = pd.DataFrame(dup_Entry_col_numbers, columns=["Duplicated Column Entry Numbers"])
+        Dataframe = pd.DataFrame(dup_Entry_col_numbers, columns=['Duplicated ' + col_name])
         Dataframe.to_csv(dup_Entry_col_file, index=False)
 
     else:
