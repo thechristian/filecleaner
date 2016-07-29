@@ -1,56 +1,30 @@
 import pandas as pd
+from utils import get_random_id
 import xlsxwriter
 
-# dup_col_numbers = []
 
-def checkForDuplicatexl(file_location, sname):
+def checkForDuplicateInRows(file_location, sname):
     str(sname)
-    datafile = pd.read_csv(file_location)
+    datafile = pd.read_excel(file_location, sname)
     df = pd.DataFrame(datafile)
 
     df['Is_Duplicated'] = df.duplicated()
-    noduplicates = df.loc[df['Is_Duplicated'] == False]
-    duplicates = df.loc[df['Is_Duplicated'] == True]
-    del noduplicates['Is_Duplicated']
-    writer1 = pd.ExcelWriter('noduplicates/noduplicates.xlsx')
-    noduplicates.to_excel(writer1, sheet_name=sname, index=False)
-    writer1.save()
-    del duplicates['Is_Duplicated']
-    writer2 = pd.ExcelWriter('duplicates/duplicates.xlsx', engine='xlsxwriter')
-    duplicates.to_excel(writer1, sheet_name=sname, index=False)
-    writer2.save()
+
+    writer = pd.ExcelWriter('dupcheck/dupRowsChecked-' + get_random_id() + '.xlsx', engine='xlsxwriter')
+    df.to_excel(writer, sheet_name=sname, index=False)
+    writer.save()
 
 
-def checkForDuplicatecsv(file_location):
-    datafile = pd.read_csv(file_location)
+def checkDuplicateInCol(upfname, sname, colname):
+    str(upfname)
+    datafile = pd.read_excel(upfname, sname)
     df = pd.DataFrame(datafile)
-
-    df['Is_Duplicated'] = df.duplicated()
-    noduplicates = df.loc[df['Is_Duplicated'] == False]
-    duplicates = df.loc[df['Is_Duplicated'] == True]
-    del noduplicates['Is_Duplicated']
-    noduplicates.to_csv('noduplicates/noduplicates.csv', index=False, encoding='utf_16')
-    del duplicates['Is_Duplicated']
-    duplicates.to_csv('duplicates/duplicates.csv', index=False, encoding='utf_16')
-
-
-def checkDuplicateInCol(file_location, col_name):
-    i = 0
-    dup_Entry_col_numbers = []
-    str(file_location)
-    data_file = pd.read_csv(file_location, index_col=False)
-    if col_name in data_file:
-        col_entries = data_file.loc[:, col_name]
-        col_entries['Duplicated'] = col_entries.duplicated()
-        for entry in col_entries['Duplicated']:
-            i = i + 1
-            if entry == True:
-                index = str(i)
-                dup_Entry_col_numbers.append(index)
-
-        dup_Entry_col_file = open('duplicates/duplicateColNumbers.csv', 'w')
-        Dataframe = pd.DataFrame(dup_Entry_col_numbers, columns=['Duplicated ' + col_name])
-        Dataframe.to_csv(dup_Entry_col_file, index=False)
+    if colname in df:
+        col_entries = df.loc[:, colname]
+        writer = pd.ExcelWriter('dupcheck/dupColChecked-' + get_random_id() + '.xlsx', engine='xlsxwriter')
+        df.loc[:, 'Duplicated ' + colname] = col_entries.duplicated()
+        df.to_excel(writer, sheet_name=sname, index=False)
+        writer.save()
 
     else:
         return "Column name does not exist"
