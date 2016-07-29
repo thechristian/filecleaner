@@ -1,4 +1,4 @@
-from dupEntries import checkForDuplicatexl, checkForDuplicatecsv, checkDuplicateInCol
+from dupEntries import checkForDuplicateInRows, checkDuplicateInCol
 from compareFiles import checkFile
 import re
 from validate import emailvalidator, phonenumbvalidator
@@ -38,28 +38,21 @@ def upload_file():
                 if sheetname == "":
                     return SheetNameError
                 else:
-                    csvfile = excel_to_csv(upfname, sheetname)
-                    checkForDuplicatexl(csvfile, sheetname)
+                    checkForDuplicateInRows(upfname, sheetname)
 
-                noduplicatefilesize = os.path.getsize('noduplicates/noduplicates.xlsx')  # file size in bytes from separated entries
-                uploadedfilesize = os.path.getsize(csvfile)  # file size from uploaded user file
-                if noduplicatefilesize == uploadedfilesize:
-                    return render_template('noduplicate.html')
-                else:
-                    return render_template('success.html')
             else:
                 return FileNotSupportedError
 
         if request.form.get('dupInCols'):
             sheetname = request.form['sheetname']
-            col = request.form['dupcolname']
-            if sheetname != "" and col != "":
+            colname = request.form['dupcolname']
+            if sheetname != "" and colname != "":
                 if f1 and allowed_filexl(f1.filename):
                     filename = secure_filename(f1.filename)
                     upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
                     f1.save(upfname)
-                    csvfile = excel_to_csv(upfname, sheetname)
-                    checkDuplicateInCol(csvfile, col)
+                    # csvfile = excel_to_csv(upfname, sheetname)
+                    checkDuplicateInCol(upfname, sheetname, colname)
                 else:
                     return FileNotSupportedError
             else:
@@ -86,15 +79,13 @@ def upload_file():
 
         elif request.form.get('emails'):
             sheetname = request.form['sheetname']
-            col = request.form['emailcol']
-            if sheetname != "" and col != "":
+            colname = request.form['emailcol']
+            if sheetname != "" and colname != "":
                 if f1 and allowed_filexl(f1.filename):
                     filename = secure_filename(f1.filename)
                     upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
                     f1.save(upfname)
-                    csvfile = excel_to_csv(upfname, sheetname)
-
-                    emailvalidator(csvfile, col)
+                    emailvalidator(upfname, sheetname, colname)
                 else:
                     return FileNotSupportedError
             else:
