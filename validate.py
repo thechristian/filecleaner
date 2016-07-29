@@ -1,36 +1,33 @@
 import re
 import pandas as pd
+from utils import get_random_id
 
 validemail = []         # will contain entries that pass as a valid email
-invalidemailcol = []     # will contain entries that does not pass as a valid email
+invalidemail = []     # will contain entries that does not pass as a valid email
 emailkey = '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$'
 phonenumbkey = "regex expression"
 
 
-def emailvalidator(x, y):
-    i = 0
-    filename = str(x)
-    emailcolname = str(y)
-    data = pd.read_csv(filename, index_col=False)
-    # check if the column name exist
-    if emailcolname in data:
-        emails = data.loc[:, emailcolname]
+def emailvalidator(fname, sname, colname):
+    data = pd.read_excel(fname, sname)
+    df = pd.DataFrame(data)
+    if colname in df:
+        emails = df.loc[:, colname]
         for email in emails:
             checkemail = re.search(emailkey, email)
             if checkemail:
                 matchemail = checkemail.group()
                 validemail.append(matchemail)
-                emailfile = open('emails/validemails.csv', 'w')  # create a file to contain valid emails
-                dataframe = pd.DataFrame(validemail, columns=["Valid Emails"])  # locating the col.
-                dataframe.to_csv(emailfile, index=False)
-                # emailfile.write(''.join(validemail))  # save to the file
+                writer = pd.ExcelWriter('emails/validEmails-' + get_random_id() + '.xlsx', engine='xlsxwriter')
+                dataframe = pd.DataFrame(validemail, columns=["Valid Emails"])
+                dataframe.to_excel(writer, sheet_name=sname, index=False)
+                writer.save()
             else:
-                i =i+ 1
-                index = str(i)
-                invalidemailcol.append(index)
-                invalidemailfile = open('emails/emailcolnum.csv', 'w')  # create a file to contain invalid emails col numbs
-                dataframe = pd.DataFrame(invalidemailcol, columns=["Invalid Email Column Numbers"])
-                dataframe.to_csv(invalidemailfile, index=False)
+                invalidemail.append(email)
+                writer = pd.ExcelWriter('emails/invalidEmails-' + get_random_id() + '.xlsx',  engine='xlsxwriter')
+                dataframe = pd.DataFrame(invalidemail, columns=["Invalid Emails"])
+                dataframe.to_excel(writer, sheet_name=sname, index=False)
+                writer.save()
     else:
         return "Column name does not exist"
 
