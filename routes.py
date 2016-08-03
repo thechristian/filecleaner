@@ -10,7 +10,7 @@ import random
 import datetime
 import hashlib
 import csv, _csv
-from utils import get_random_id, allowed_filecsv, allowed_filexl, excel_to_csv
+from utils import get_random_id, allowed_filecsv, allowed_filexl
 
 
 app = Flask(__name__)
@@ -51,7 +51,6 @@ def upload_file():
                     filename = secure_filename(f1.filename)
                     upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
                     f1.save(upfname)
-                    # csvfile = excel_to_csv(upfname, sheetname)
                     checkDuplicateInCol(upfname, sheetname, colname)
                 else:
                     return FileNotSupportedError
@@ -77,7 +76,7 @@ def upload_file():
             else:
                 return FileSizeError
 
-        elif request.form.get('emails'):
+        if request.form.get('emails'):
             sheetname = request.form['sheetname']
             colname = request.form['emailcol']
             if sheetname != "" and colname != "":
