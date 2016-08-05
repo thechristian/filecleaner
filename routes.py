@@ -29,16 +29,16 @@ def main():
 def upload_file():
     if request.method == 'POST':    # checking if its a post method
         f1 = request.files['dataFile1']  # get file name from web interface
+        filename = secure_filename(f1.filename)
+        upfname1 = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
+        f1.save(upfname1)
         if request.form.get('check_dup_in_rows'):
             if f1 and allowed_filexl(f1.filename):
-                filename = secure_filename(f1.filename)
-                upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
-                f1.save(upfname)
                 sheetname = request.form['sheetname']
                 if sheetname == "":
                     return SheetNameError
                 else:
-                    checkForDuplicateInRows(upfname, sheetname)
+                    checkForDuplicateInRows(upfname1, sheetname)
 
             else:
                 return FileNotSupportedError
@@ -48,24 +48,17 @@ def upload_file():
             colname = request.form['dupcolname']
             if sheetname != "" and colname != "":
                 if f1 and allowed_filexl(f1.filename):
-                    filename = secure_filename(f1.filename)
-                    upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
-                    f1.save(upfname)
-                    checkDuplicateInCol(upfname, sheetname, colname)
+                    checkDuplicateInCol(upfname1, sheetname, colname)
                 else:
                     return FileNotSupportedError
             else:
                 return SheetNameError, ColumnNameError
         if request.form.get('comparefiles'):
-            compf1 = request.files['dataFile1']  # get file name from web interface
             compf2 = request.files['dataFile2']  # get file name from web interface
-            filename1 = secure_filename(compf1.filename)
             filename2 = secure_filename(compf2.filename)
-            upfname1 = os.path.join(app.config['uploadFolder'], get_random_id() + 'compf1-' + filename1)
             upfname2 = os.path.join(app.config['uploadFolder'], get_random_id() + 'compf2-' + filename2)
 
             if size:
-                compf1.save(upfname1)  # save file to destination
                 compf2.save(upfname2)
                 hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
                 if hashvalue1 == hashvalue2:
@@ -81,15 +74,12 @@ def upload_file():
             colname = request.form['emailcol']
             if sheetname != "" and colname != "":
                 if f1 and allowed_filexl(f1.filename):
-                    filename = secure_filename(f1.filename)
-                    upfname = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
-                    f1.save(upfname)
-                    emailvalidator(upfname, sheetname, colname)
+                    emailvalidator(upfname1, sheetname, colname)
                 else:
                     return FileNotSupportedError
             else:
                 return SheetNameError, ColumnNameError
-            return "nice"  # change to anything later
+            # return "nice"  # change to anything later
         else:
-            return "No options selected."
+            return "Program results for user comes here."
 
