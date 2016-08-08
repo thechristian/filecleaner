@@ -60,12 +60,13 @@ def upload_file():
 
             if size:
                 compf2.save(upfname2)
-                hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
-                if hashvalue1 == hashvalue2:
-                    return render_template('same.html')
-
-                else:
-                    return render_template('different.html')
+                checkFile(upfname1, upfname2)
+                # hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
+                # if hashvalue1 == hashvalue2:
+                #     return render_template('same.html')
+                #
+                # else:
+                #     return render_template('different.html')
             else:
                 return FileSizeError
 
