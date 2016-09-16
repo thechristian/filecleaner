@@ -1,4 +1,4 @@
- $(document).ready(function() {
+$(document).ready(function() {
 // move init code from materialize here
   $('.button-collapse').sideNav();
 
@@ -37,20 +37,22 @@
   else
     $("#dfile2").hide();
   });
-
-
+  // add filesize method. this relies on the additional-methods script included
+  $.validator.addMethod('filesize', function(val, field, flsize){
+	  return this.optional(field) || (field.files[0].size <= flsize);
+  });
   // Form Validation
-
-
   $("#cleanerForm").validate({
     rules: {
-      dataFile1: "required",
-      
+      dataFile1: {
+    	  required: true, 
+    	  extension: "xlsx|xls|csv",
+    	  filesize:3000000
+      },
       dupcolname: {
         required: "#dupInCols:checked",
         maxlength: 20
       },
-
       phonenumbercol: {
         required: "#validatefonNum:checked",
         maxlength: 20
@@ -60,12 +62,12 @@
         maxlength: 20
       },
       dataFile2: {
-        required: "#compare:checked"
+        required: "#compare:checked",
+        filesize:3000000
       },
-      
     },
     messages: {
-      dataFile1: "Please this file is required.",
+      dataFile1: "Upload a < 3MB xls/xlsx/csv file",
       dupcolname: {
         required: "This field is needed",
         maxlength: "Enter atmost 20 characters for the column name"
