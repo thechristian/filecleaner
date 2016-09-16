@@ -1,25 +1,39 @@
 <!--File cleaning form-->
 <form id="compareForm" action="/compare-files" method="post" enctype="multipart/form-data">
-	<div>
-		<div class="card-panel center-align hoverable">
-			<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
-		</div>
-		<input type="file" name="dataFile1" id="dfile1" required="required" />
-
-		<div class="">
-			<p>
-				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
-				<label for="compare">Compare Two Files</label>
-			</p>
-			 <input type="file" id="dfile2" name="dataFile2" />
-		</div>
-
+	<div class="card-panel center-align">
+		<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
 	</div>
 
-	<div class="input-field row">
-		<div class="col l8">&nbsp;</div>
-		<div class="col l4">
-			<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
+	<div class="row">
+		<div class="col s6">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>1st</span>
+					<input type="file" name="dataFile1" id="dfile1" required="required"/>
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
 		</div>
+
+		<div class="col s6">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>2nd</span>
+					<input type="file" id="dfile2" name="dataFile2" />
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s6">
+			<div class="input-field">
+					<button class="btn" type="submit" id="isubmit">RUN</button>
+			</div>
 	</div>
 </form>
