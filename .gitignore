@@ -7,6 +7,8 @@ noduplicates/**
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+.project
+.pydevproject
 
 # Distribution / packaging
 .Python
