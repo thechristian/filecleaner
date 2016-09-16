@@ -1,0 +1,25 @@
+<!--File cleaning form-->
+<form id="compareForm" action="/compare-files" method="post" enctype="multipart/form-data">
+	<div>
+		<div class="card-panel center-align hoverable">
+			<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
+		</div>
+		<input type="file" name="dataFile1" id="dfile1" required="required" />
+
+		<div class="">
+			<p>
+				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
+				<label for="compare">Compare Two Files</label>
+			</p>
+			 <input type="file" id="dfile2" name="dataFile2" />
+		</div>
+
+	</div>
+
+	<div class="input-field row">
+		<div class="col l8">&nbsp;</div>
+		<div class="col l4">
+			<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
+		</div>
+	</div>
+</form>
