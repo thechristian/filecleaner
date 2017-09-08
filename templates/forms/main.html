@@ -1,4 +1,18 @@
 <!--File cleaning form-->
+<style type="text/css">
+	[type="checkbox"].filled-in:checked + label:after {
+  border: 2px solid #2196F3;
+  background-color: #2196F3;
+}
+
+input:focus:not([type]):not([readonly]), input[type="text"]:focus:not([readonly]), input[type="password"]:focus:not([readonly]), input[type="email"]:focus:not([readonly]), input[type="url"]:focus:not([readonly]), input[type="time"]:focus:not([readonly]), input[type="date"]:focus:not([readonly]), input[type="datetime"]:focus:not([readonly]), input[type="datetime-local"]:focus:not([readonly]), input[type="tel"]:focus:not([readonly]), input[type="number"]:focus:not([readonly]), input[type="search"]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #2196F3;
+    box-shadow: 0 1px 0 0 #2196F3;
+}
+label.error{
+	color:#2196F3!important;
+}
+</style>
 <form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
 	<div>
 		<div class="card-panel center-align hoverable">
@@ -51,7 +65,7 @@
 	<div class="input-field row">
 		<div class="col l8">&nbsp;</div>
 		<div class="col l4">
-			<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
+			<button class="btn blue" type="submit" id="isubmit">RUN</button>
 		</div>
 	</div>	
 </form>
