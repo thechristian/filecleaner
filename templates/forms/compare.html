@@ -1,27 +1,15 @@
 <!--File cleaning form-->
 <form id="compareForm" action="/compare-files" method="post" enctype="multipart/form-data">
 	<div class="card-panel center-align">
-		<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
+		<span class="blue-text text-darken-2">Select the files you want to compare</span>
 	</div>
 
 	<div class="row">
-		<div class="col s6">
+		<div class="col s12">
 			<div class="input-field file-field">
 				<div class="btn">
-					<span>1st</span>
-					<input type="file" name="dataFile1" id="dfile1" required="required"/>
-				</div>
-				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text">
-				</div>
-			</div>
-		</div>
-
-		<div class="col s6">
-			<div class="input-field file-field">
-				<div class="btn">
-					<span>2nd</span>
-					<input type="file" id="dfile2" name="dataFile2" />
+					<span>Files</span>
+					<input type="file" name="cfield" required="required" multiple/>
 				</div>
 				<div class="file-path-wrapper">
 					<input class="file-path validate" type="text">
