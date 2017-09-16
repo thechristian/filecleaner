@@ -8,6 +8,7 @@ import csv
 import os
 
 ALLOWED_EXTENSIONSxl = set(['xls', 'xlsx'])    # file extensions allowed
+ALLOWED_EXTENSIONS = set(['xls', 'xlsx', 'csv'])    # file extensions allowed
 ALLOWED_EXTENSIONScsv = set(['csv'])
 
 
@@ -15,6 +16,9 @@ def allowed_filexl(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONSxl
 
+def allowed_files(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def allowed_filecsv(filename):
     return '.' in filename and \
