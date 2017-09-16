@@ -13,6 +13,7 @@ def checkForDuplicateInRows(file_location, sname):
     writer = pd.ExcelWriter('dupcheck/dupRowsChecked-' + get_random_id() + '.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name=sname, index=False)
     writer.save()
+    return True
 
 
 def checkDuplicateInCol(upfname, sname, colname):
@@ -25,7 +26,7 @@ def checkDuplicateInCol(upfname, sname, colname):
         df.loc[:, 'Duplicated ' + colname] = col_entries.duplicated()
         df.to_excel(writer, sheet_name=sname, index=False)
         writer.save()
-
+        return True
     else:
         return "Column name does not exist"
 
