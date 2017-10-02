@@ -14,30 +14,60 @@ ALLOWED_EXTENSIONScsv = set(['csv'])
 
 def allowed_filexl(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONSxl
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONSxl
 
 def allowed_files(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def allowed_filecsv(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONScsv
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONScsv
 
 
 def get_random_id():
+
     for i in xrange(1):
         # get date and time
-	    timer = datetime.now()
+        timer = datetime.now()
         # geting time and date without spaces
-	    timeAndDate = timer.isoformat()
+        timeAndDate = timer.isoformat()
         # removing unused string from the date and time
-	    fullTime = timeAndDate.split(".")[0]
+        fullTime = timeAndDate.split(".")[0]
         # generate a random number to make the time unigue
-	    randomNumber = '%04.4f' % random.random()
+        randomNumber = '%04.4f' % random.random()
         # add time and date to the random number
-	    finalTimeAndDate = '-'.join([fullTime, randomNumber])
-    return finalTimeAndDate
+
+        today_folder = '-'.join([fullTime,randomNumber])
+    return today_folder
+
+def upload_folder(uploadFolder):
+    # I am thinking we could group files in folders according to date
+    # and use time as the random string
+    for i in xrange(1):
+        # get date and time
+        timer = datetime.now()
+        # geting time and date without spaces
+        # removing unused string from the date and time
+	    #fullTime = timeAndDate.split(".")[0]
+        # generate a random number to make the time unigue
+	    #randomNumber = '%04.4f' % random.random()
+        # add time and date to the random number
+
+
+        #get only time without unused string
+        #
+        #time = timer.time().isoformat().split('.')[0]
+        #append time during upload
+        #
+        # get only date
+        date = timer.date().isoformat()
+        # date/time
+        today_folder = os.path.join(uploadFolder,date)
+        if not os.path.exists(today_folder):
+            os.mkdir(os.path.join(today_folder))
+    return today_folder
+
 
 def excel_to_csv(fname, sname):
     file_name = str(fname)
@@ -52,3 +82,8 @@ def excel_to_csv(fname, sname):
     else:
         return "Sheet does not exist."
     return file_path
+
+def collectSheets(file_location):
+    datafile = pd.read_excel(file_location,sheetname=None)
+    sheets = datafile.keys()
+    return sheets

@@ -1,11 +1,17 @@
-$('#test').click(function() {
-  $.getJSON('http://127.0.0.1:5000/files', function(data) {
-    for (var i = data['files'].length - 1; i >= 0; i--) {
-      console.log(data['files'][i]);
-    }
-  });
-});
+current_file = "";
 
 $('.files').click(function() {
-  $('#cleanerForm #dfile1').val($(this).html());
+  f1 = $(this).html();
+  current_file = f1;
+  $('#cleanerForm #dfile1').val(f1);
+  $("#working_file").text(f1);
+  // console.log(f1);
+  $.post("/file-data?string="+f1,
+    //    {
+    //        string:f1
+    //    },
+       function(result){
+        $('#sheetnameid').val(result.data)
+       }
+       );
 });

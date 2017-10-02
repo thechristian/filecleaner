@@ -1,10 +1,12 @@
+import os
+import json
 import pandas as pd
 from utils import get_random_id
 import xlsxwriter
 
 
 def checkForDuplicateInRows(file_location, sname):
-    str(sname)
+    # str(sname)
     datafile = pd.read_excel(file_location, sname)
     df = pd.DataFrame(datafile)
 
@@ -17,7 +19,7 @@ def checkForDuplicateInRows(file_location, sname):
 
 
 def checkDuplicateInCol(upfname, sname, colname):
-    str(upfname)
+    # str(upfname)
     datafile = pd.read_excel(upfname, sname)
     df = pd.DataFrame(datafile)
     if colname in df:
@@ -29,5 +31,3 @@ def checkDuplicateInCol(upfname, sname, colname):
         return True
     else:
         return "Column name does not exist"
-
-

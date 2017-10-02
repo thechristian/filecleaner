@@ -9,24 +9,30 @@
 		{% block navigation %}
 			{% include "navs/main.html" %}
 		{% endblock %}
-		<div class="section" id="index-banner">
-			<div class="container">
 				{% block content %}
-					<div class="row upload-config">
-						<div class="col l3"> &nbsp; </div>
-						<div class="col l6">
-							{% include "forms/main.html" %}							
-						</div>
-						<div class="col l3"></div>
-					</div>
+				<div class="col l3" id="uploadsHere">Uploads Here <br>
+					{% for file in files %}
+						<a href="#" class="files"> {{ file }} </a>
+					{% endfor %}
+					<form id="cleanerForm" action="/File-Upload" method="post" enctype="multipart/form-data">
+
+					<input type="file" name="newdataFile1" id="ndfile1" required="required" />
+					<input type="submit" value="submit">
+				</form>
+
+				</div>
+				<div class="col l6" id="operationsHere">
+					Operations Here, @working_file :<span id="working_file">None Selected</span>
+					{% include "forms/main.html" %}
+				</div>
+				<div class="col l3" id="resultsHere"> Results Here </div>
 				{% endblock %}
-			</div>			
-		</div>
 		{% block scripts %}
 			{{ super() }}
 			<script type="text/javascript" src="static/dist/jquery/js/jquery.validate.min.js"></script>
 			<script type="text/javascript" src="static/dist/jquery/js/additional-methods.js"></script>
 			<script type="text/javascript" src="static/js/scripting.js"></script>
+			<script type="text/javascript" src="static/js/script.js"></script>
 		{% endblock %}
 	</body>
 </html>

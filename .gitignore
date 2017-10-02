@@ -4,7 +4,7 @@
 # project specific
 newfiles/**
 cleaned/**
-uploads/**
+#uploads/**
 duplicates/**
 noduplicates/**
 # Byte-compiled / optimized / DLL files

@@ -1,17 +1,18 @@
 from dupEntries import checkForDuplicateInRows, checkDuplicateInCol
 from compareFiles import checkFile
 import re
+import json
 import pprint
 from validate import emailvalidator, phonenumbvalidator
 import os
-from flask import Flask, render_template, request, Response, redirect, url_for
+from flask import Flask, render_template, request, Response, redirect, url_for , jsonify
 from werkzeug.utils import secure_filename
 import sys
 import random
 import datetime
 import hashlib
 import csv, _csv
-from utils import get_random_id, allowed_filecsv, allowed_filexl, allowed_files
+from utils import get_random_id, allowed_filecsv, allowed_filexl, allowed_files, collectSheets
 
 
 app = Flask(__name__)
@@ -22,10 +23,32 @@ FileNotSupportedError = "Error! File not supported. Upload the appropriate file 
 FileSizeError = "Error! File size too big. Check file and try again"
 ColumnNameError = "Column name not provided"
 
+def uploadedFiles():
+    # list of files in upload folder
+    uploadedFiles = [f for f in os.listdir(os.path.join(app.config['uploadFolder'],''))]
+    return uploadedFiles
 
 @app.route("/")
 def main():
-    return render_template('index.html')  # web interface - form
+    return render_template('index.html',files=uploadedFiles())  # web interface - form
+
+@app.route("/files", methods=['GET', 'POST'])
+def filescollect():
+    return jsonify(files=uploadedFiles())
+
+@app.route("/file-data", methods=['GET','POST'])
+def get_file_data():
+    # for example getting excel sheets
+    try:
+        # get file path
+        fine_file = str(request.args.get('string').strip()) # fine file name
+        file_location = os.path.join(app.config['uploadFolder'],fine_file)
+        # call function to return requested file data
+        data = collectSheets(file_location)
+        return jsonify(data=data,status=True)
+    except:
+        return jsonify(status=False)
+
 
 @app.route("/compare")
 def compare():
@@ -52,15 +75,27 @@ def compare_files():
         else:
             return FileSizeError
 
-
-@app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
+# this would separately handle all file uploads
+@app.route('/File-Upload',methods=['POST'])
 def upload_file():
     if request.method == 'POST':    # checking if its a post method
-        f1 = request.files['dataFile1']  # get file name from web interface
+        f1 = request.files['newdataFile1']  # get file name from web interface
         filename = secure_filename(f1.filename)
-        upfname1 = os.path.join(app.config['uploadFolder'], get_random_id() + filename)
+        time = datetime.datetime.now().time().isoformat().split('.')[0]
+        upfname1 = os.path.join(upload_folder(app.config['uploadFolder']), time + "." +filename)
         f1.save(upfname1)
+        return jsonify(upstatus=True)
+    else:
+        return jsonify(upstatus=False)
 
+@app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
+def clean_file():
+    if request.method == 'POST':    # checking if its a post method
+        filename = str(request.form.get('dataFile1').strip())  # get file name from web interface
+        sheetname = str(request.form.get('sheetname').strip())
+        dfile = os.path.join(app.config['uploadFolder'],filename)
+
+        #return jsonify(filename = filename)
         #prepare actions
         row_dupes = request.form.get('check_dup_in_rows')
         col_dupes = request.form.get('dupInCols')
@@ -79,26 +114,26 @@ def upload_file():
 
         # if the user checked to perform row duplication
         if row_dupes:
-            if f1 and allowed_files(f1.filename):
-                sheetname = request.form['sheetname']
+            if allowed_files(dfile):
+                sheetname = sheetname
                 if sheetname == "":
                     return SheetNameError
                 else:
-                    checkForDuplicateInRows(upfname1, sheetname)
+                    checkForDuplicateInRows(dfile, sheetname)
                     stats['row_dupes']['status'] = True
             else:
                 return FileNotSupportedError
         # if not just go on
         else:
             pass
-        
+
         # if the user checked to perform column duplication check, if not pass
         if col_dupes:
             sheetname = request.form['sheetname']
             colname = request.form['dupcolname']
             if sheetname != "" and colname != "":
-                if f1 and allowed_files(f1.filename):
-                    checkDuplicateInCol(upfname1, sheetname, colname)
+                if allowed_files(filename):
+                    checkDuplicateInCol(filename, sheetname, colname)
                     stats['col_dupes']['status'] = True
                 else:
                     return FileNotSupportedError
@@ -106,15 +141,15 @@ def upload_file():
                 return SheetNameError, ColumnNameError
         else:
             pass
-        
+
         # if the user checked to perform email verification, and provides particular email column
         # if not, pass
         if col_email:
             sheetname = request.form['sheetname']
             colname = request.form['emailcol']
             if sheetname != "" and colname != "":
-                if f1 and allowed_files(f1.filename):
-                    emailvalidator(upfname1, sheetname, colname)
+                if allowed_files(filename):
+                    emailvalidator(filename, sheetname, colname)
                     stats['col_email']['status'] = True
                 else:
                     return FileNotSupportedError

@@ -13,15 +13,12 @@ label.error{
 	color:#2196F3!important;
 }
 </style>
-<form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
+<form id="cleanerForm" action="/File-Cleaner" method="post">
 	<div>
 		<div class="card-panel center-align hoverable">
 			<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
 		</div>
-		<input type="file" name="dataFile1" id="dfile1" required="required" />
-		<!--<div class="file-path-wrapper">
-			<input class="file-path validate" type="text">
-		</div>		 -->		
+		<input type="text" name="dataFile1" id="dfile1" required="required" />
 
 		<div class="">
 			<div class="file-path-wrapper">
@@ -36,7 +33,7 @@ label.error{
 				<label for="dupInCols">Check Duplicates In A Column</label>
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" /> 
+				<input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" />
 			</div>
 			<!--<input type="file" name="dataFile" required = "required"/><br> -->
 			<p>
@@ -49,9 +46,9 @@ label.error{
 			<p>
 				<input type="checkbox" class="filled-in" id="validateEmails" name="emails" value="checked" />
 				<label for="validateEmails">Validate E-mails</label>
-			</p>				
+			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> 
+				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" />
 			</div>
 			<p>
 				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
@@ -67,5 +64,5 @@ label.error{
 		<div class="col l4">
 			<button class="btn blue" type="submit" id="isubmit">RUN</button>
 		</div>
-	</div>	
+	</div>
 </form>
