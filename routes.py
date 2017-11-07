@@ -12,7 +12,7 @@ import random
 import datetime
 import hashlib
 import csv, _csv
-from utils import get_random_id, allowed_filecsv, allowed_filexl, allowed_files, collectSheets
+from utils import upload_folder, allowed_filecsv, allowed_filexl, allowed_files, collectSheets
 
 
 app = Flask(__name__)
@@ -39,6 +39,8 @@ def filescollect():
 @app.route("/file-data", methods=['GET','POST'])
 def get_file_data():
     # for example getting excel sheets
+    print('here')
+
     try:
         # get file path
         fine_file = str(request.args.get('string').strip()) # fine file name
@@ -46,8 +48,8 @@ def get_file_data():
         # call function to return requested file data
         data = collectSheets(file_location)
         return jsonify(data=data,status=True)
-    except:
-        return jsonify(status=False)
+    except Exception as e:
+        return jsonify(status=False,e=e)
 
 
 @app.route("/compare")
@@ -132,8 +134,8 @@ def clean_file():
             sheetname = request.form['sheetname']
             colname = request.form['dupcolname']
             if sheetname != "" and colname != "":
-                if allowed_files(filename):
-                    checkDuplicateInCol(filename, sheetname, colname)
+                if allowed_files(dfile):
+                    checkDuplicateInCol(dfile, sheetname, colname)
                     stats['col_dupes']['status'] = True
                 else:
                     return FileNotSupportedError
@@ -148,8 +150,8 @@ def clean_file():
             sheetname = request.form['sheetname']
             colname = request.form['emailcol']
             if sheetname != "" and colname != "":
-                if allowed_files(filename):
-                    emailvalidator(filename, sheetname, colname)
+                if allowed_files(dfile):
+                    emailvalidator(dfile, sheetname, colname)
                     stats['col_email']['status'] = True
                 else:
                     return FileNotSupportedError

@@ -47,19 +47,6 @@ def upload_folder(uploadFolder):
     for i in xrange(1):
         # get date and time
         timer = datetime.now()
-        # geting time and date without spaces
-        # removing unused string from the date and time
-	    #fullTime = timeAndDate.split(".")[0]
-        # generate a random number to make the time unigue
-	    #randomNumber = '%04.4f' % random.random()
-        # add time and date to the random number
-
-
-        #get only time without unused string
-        #
-        #time = timer.time().isoformat().split('.')[0]
-        #append time during upload
-        #
         # get only date
         date = timer.date().isoformat()
         # date/time
@@ -85,5 +72,7 @@ def excel_to_csv(fname, sname):
 
 def collectSheets(file_location):
     datafile = pd.read_excel(file_location,sheetname=None)
-    sheets = datafile.keys()
-    return sheets
+    sheets_loc ={}
+    for sheets in datafile.keys():
+        sheets_loc[sheets] = list(datafile[sheets].keys())
+    return sheets_loc

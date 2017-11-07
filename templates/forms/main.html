@@ -22,7 +22,8 @@ label.error{
 
 		<div class="">
 			<div class="file-path-wrapper">
-				<input type="text" id="sheetnameid" name="sheetname" placeholder="Sheet Name in Excel File" maxlength="20" required="required" />
+				<select class="blue-text text-darken-2" id="sheetnameid" name="sheetname" style="border-color:#2196F3" onchange="makeColumns();">
+				</select> 
 			</div>
 			<p>
 				<input id="duplicates" class="filled-in" type="checkbox" name="check_dup_in_rows" value="checked" />
@@ -33,22 +34,29 @@ label.error{
 				<label for="dupInCols">Check Duplicates In A Column</label>
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" />
+				<!-- <input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" /> -->
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="dupcolname" style="border-color:#2196F3">
+				</select>
 			</div>
 			<!--<input type="file" name="dataFile" required = "required"/><br> -->
 			<p>
 				<input id="validatefonNum" class="filled-in" type="checkbox" name="pnumbers" value="checked" />
 				<label for="validatefonNum">Validate Phone Numbers</label>
+				
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name. Note: Ghana mobile phone numbers only." maxlength="20" />
+				<!-- <input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name. Note: Ghana mobile phone numbers only." maxlength="20" /> -->
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="phonenumbercol" style="border-color:#2196F3">
+				</select>
 			</div>
 			<p>
 				<input type="checkbox" class="filled-in" id="validateEmails" name="emails" value="checked" />
 				<label for="validateEmails">Validate E-mails</label>
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" />
+				<!-- <input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> -->
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="emailcol" style="border-color:#2196F3">
+				</select>
 			</div>
 			<p>
 				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
