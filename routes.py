@@ -3,9 +3,9 @@ from compareFiles import checkFile
 import re
 import json
 import pprint
-from validate import emailvalidator, phonenumbvalidator
+from validate import emailvalidator #phonenumbvalidator
 import os
-from flask import Flask, render_template, request, Response, redirect, url_for , jsonify
+from flask import Flask, render_template, request, Response, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 import sys
 import random

@@ -32,5 +32,5 @@ def emailvalidator(fname, sname, colname):
         return "Column name does not exist"
 
 
-def phonenumbvalidator():
-    print "phone number validation code"
+#def phonenumbvalidator():
+ #   print "phone number validation code"
