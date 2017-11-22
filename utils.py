@@ -76,3 +76,12 @@ def collectSheets(file_location):
     for sheets in datafile.keys():
         sheets_loc[sheets] = list(datafile[sheets].keys())
     return sheets_loc
+
+def clear_output_folder(folder):
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(e)

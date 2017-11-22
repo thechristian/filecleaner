@@ -5,7 +5,7 @@ import json
 import pprint
 from validate import emailvalidator #phonenumbvalidator
 import os
-from flask import Flask, render_template, request, Response, redirect, url_for, jsonify
+from flask import Flask, render_template, request, Response, redirect, url_for, jsonify, send_file
 from werkzeug.utils import secure_filename
 import sys
 import random
@@ -121,8 +121,10 @@ def clean_file():
                 if sheetname == "":
                     return SheetNameError
                 else:
-                    checkForDuplicateInRows(dfile, sheetname)
+                    #let checkForDuplicateInRows return path to prepared file
+                    result = checkForDuplicateInRows(dfile, sheetname)
                     stats['row_dupes']['status'] = True
+                    stats['row_dupes']['result_path'] = result
             else:
                 return FileNotSupportedError
         # if not just go on
@@ -135,8 +137,10 @@ def clean_file():
             colname = request.form['dupcolname']
             if sheetname != "" and colname != "":
                 if allowed_files(dfile):
-                    checkDuplicateInCol(dfile, sheetname, colname)
+                    #let checkDuplicateInCol return path to prepared file
+                    result = checkDuplicateInCol(dfile, sheetname, colname)
                     stats['col_dupes']['status'] = True
+                    stats['col_dupes']['result_path'] = result
                 else:
                     return FileNotSupportedError
             else:
@@ -151,8 +155,10 @@ def clean_file():
             colname = request.form['emailcol']
             if sheetname != "" and colname != "":
                 if allowed_files(dfile):
-                    emailvalidator(dfile, sheetname, colname)
+                    # let emailvalidator return path to prepared file
+                    result = emailvalidator(dfile, sheetname, colname)
                     stats['col_email']['status'] = True
+                    stats['col_email']['result_path'] = result
                 else:
                     return FileNotSupportedError
             else:
@@ -160,4 +166,10 @@ def clean_file():
         else:
             pass
 
-        return render_template('complete.html', res=stats)
+        #return render_template('complete.html', res=stats)
+        return jsonify(res=stats)
+
+@app.route('/File-download', methods=['GET', 'POST'])  # download the requested file
+def download_file():
+    dfile = request.args.get('file')
+    return send_file(dfile)

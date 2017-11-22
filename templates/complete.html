@@ -17,7 +17,7 @@
 						<div class="col s4 offset-s4">
 							<div class="card-panel light-blue">
 								<span class="white-text">
-									Row duplication check has been completed.
+									Row duplication check has been completed. {{ res.row_dupes.result_path }}
 								</span>
 							</div>
 						</div>
@@ -40,8 +40,9 @@
 						{% endif %}
 				</div>
 				{% endblock %}
-			</div>			
+			</div>
 		</div>
+
 	</body>
 
 </html>
