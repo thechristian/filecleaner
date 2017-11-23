@@ -172,4 +172,5 @@ def clean_file():
 @app.route('/File-download', methods=['GET', 'POST'])  # download the requested file
 def download_file():
     dfile = request.args.get('file')
-    return send_file(dfile)
+    dfile_name = dfile.split('/')[-1]
+    return send_file(dfile,as_attachment=True,attachment_filename=dfile_name)
