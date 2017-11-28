@@ -11,15 +11,13 @@
 		{% endblock %}
 				{% block content %}
 				<div class="col l3" id="uploadsHere">Uploads Here <br>
-					{% for file in files %}
-						<a href="#" class="files"> {{ file }} </a>
-					{% endfor %}
+					<div id="File-manager" style="text-align:center">
+						<img src="static/gif-load.gif" alt="Loading ...">
+					</div>
 					<form id="cleanerForm" action="/File-Upload" method="post" enctype="multipart/form-data">
-
-					<input type="file" name="newdataFile1" id="ndfile1" required="required" />
-					<input type="submit" value="submit">
-				</form>
-
+						<input type="file" name="newdataFile1" id="ndfile1" required="required" />
+						<input type="submit" value="submit">
+					</form>
 				</div>
 				<div class="col l5" id="operationsHere">
 					Operations Here, @working_file :<span id="working_file">None Selected</span>

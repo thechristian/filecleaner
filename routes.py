@@ -36,6 +36,10 @@ def main():
 def filescollect():
     return jsonify(files=uploadedFiles())
 
+@app.route("/files-manager", methods=['GET', 'POST'])
+def filemanager():
+    return jsonify(files=uploadedFiles())
+
 @app.route("/file-data", methods=['GET','POST'])
 def get_file_data():
     # for example getting excel sheets

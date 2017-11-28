@@ -76,3 +76,13 @@ function makeDownloads(res){
 
   $('#resultsHere').html(temp);
 }
+
+$(document).ready(function(){
+  url = '/files-manager';
+  $.get(url,
+    function(resp){
+      console.log(resp);
+      
+    }
+  );
+});
