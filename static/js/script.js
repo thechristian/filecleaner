@@ -1,5 +1,3 @@
-
-
 function makeSelect(opts,ID){
   var newOpts = "<option value=''>------</option>";
   for (var i = opts.length - 1; i >= 0; i--) {
@@ -22,9 +20,9 @@ function subForm() {
     var url = "/File-Cleaner"; // the script where you handle the form input.
     $.post(url,data,
       function(resp){
-        console.log(resp);
+        // console.log(resp);
         res = resp.res;
-        console.log(res);
+        // console.log(res);
         makeDownloads(res);
       }
     );
@@ -90,7 +88,7 @@ $(document).ready(function(){
   url = '/file-manager';
   $.get(url,
     function(resp){
-      console.log(resp);
+      // console.log(resp);
       handle = fileManager(resp.files);
 
       $('#File-manager').empty().html(handle);
@@ -101,14 +99,13 @@ $(document).ready(function(){
         f1 = $(this).data('file');
         current_file = f1;
         $('#cleanerForm #dfile1').val(f1);
-        $("#working_file").text(f1);
         // console.log(f1);
         $.post("/file-data?string="+f1,
         //    {
         //        string:f1
         //    },
            function(result){
-            console.log(result);
+            // console.log(result);
             current_file_data = result.data;
             makeSelect(Object.keys(current_file_data),'#sheetnameid');
            }

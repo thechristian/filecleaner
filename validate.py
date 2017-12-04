@@ -22,7 +22,7 @@ def emailvalidator(fname, sname, colname):
     if colname in df:
         emails = df.loc[:, colname]
         for email in emails:
-            checkemail = re.search(emailkey, email)
+            checkemail = re.search(emailkey, str(email))
             if checkemail:
                 matchemail = checkemail.group()
                 validemail.append(matchemail)

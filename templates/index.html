@@ -11,7 +11,7 @@
 			{% include "navs/main.html" %}
 		{% endblock %}
 				{% block content %}
-				<div class="col l3" id="uploadsHere">Uploads Here <br>
+				<div class="col l3" id="uploadsHere">
 					<div id="File-manager" style="text-align:center">
 						<img src="static/gif-load.gif" alt="Loading ...">
 					</div>
@@ -29,10 +29,9 @@
 					</form>
 				</div>
 				<div class="col l5" id="operationsHere">
-					Operations Here, @working_file :<span id="working_file">None Selected</span>
 					{% include "forms/main.html" %}
 				</div>
-				<div class="col l4" id="resultsHere"> Results Here <br>
+				<div class="col l4" id="resultsHere">
 
 				</div>
 				{% endblock %}
