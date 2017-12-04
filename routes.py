@@ -25,18 +25,21 @@ ColumnNameError = "Column name not provided"
 
 def uploadedFiles():
     # list of files in upload folder
-    uploadedFiles = [f for f in os.listdir(os.path.join(app.config['uploadFolder'],''))]
+    uploaded = [f for f in os.listdir(os.path.join(app.config['uploadFolder'],''))]
+    uploadedFiles = {}
+    for item in uploaded:
+        path = os.path.join(app.config['uploadFolder'],item)
+        if os.path.isdir(path):
+            uploadedFiles[item] = [f for f in os.listdir(path)]
+        else:
+            uploadedFiles['LEVEL'] = item
     return uploadedFiles
 
 @app.route("/")
 def main():
-    return render_template('index.html',files=uploadedFiles())  # web interface - form
+    return render_template('index.html')  # web interface - form
 
-@app.route("/files", methods=['GET', 'POST'])
-def filescollect():
-    return jsonify(files=uploadedFiles())
-
-@app.route("/files-manager", methods=['GET', 'POST'])
+@app.route("/file-manager", methods=['GET', 'POST'])
 def filemanager():
     return jsonify(files=uploadedFiles())
 

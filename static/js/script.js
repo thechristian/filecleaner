@@ -1,23 +1,4 @@
-current_file = "";
-current_file_data = "";
 
-$('.files').click(function() {
-  f1 = $(this).html();
-  current_file = f1;
-  $('#cleanerForm #dfile1').val(f1);
-  $("#working_file").text(f1);
-  // console.log(f1);
-  $.post("/file-data?string="+f1,
-    //    {
-    //        string:f1
-    //    },
-       function(result){
-        console.log(result);
-        current_file_data = result.data;
-        makeSelect(Object.keys(current_file_data),'#sheetnameid');
-       }
-       );
-});
 
 function makeSelect(opts,ID){
   var newOpts = "<option value=''>------</option>";
@@ -77,12 +58,64 @@ function makeDownloads(res){
   $('#resultsHere').html(temp);
 }
 
+function fileManager(files){
+  handle = `<ul class="collapsible z-depth-0" data-collapsible="expandable" style="max-height:400px;overflow:auto">`;
+  handle += `<li><div class="collapsible-header">
+                <input id="search" type="text" class="validate" placeholder="search file">
+            </div></li>`;
+  for (var item in files) {
+    if (item == 'LEVEL') {
+      continue;
+    }else{
+      handle += `<li>
+                  <div class="collapsible-header" style="text-align:left"><i class="material-icons blue-text">folder</i>${item}</div>
+                  <div class="collapsible-body"><div class="collection" style="text-align:left;">`;
+      for (file of files[item]) {
+        f1=item+"/"+file;
+        f = file.split('.')
+        file = f[f.length-2]
+        handle += `<a href="#" data-file="${f1}" class="blue-text collection-item files" style="margin-left:40px">${file}</a>`;
+      }
+        handle += `</div></div></li>`;
+    }
+  }
+  handle += '</ul>';
+  return handle;
+}
+
 $(document).ready(function(){
-  url = '/files-manager';
+  current_file = "";
+  current_file_data = "";
+  // requet files
+  url = '/file-manager';
   $.get(url,
     function(resp){
       console.log(resp);
-      
+      handle = fileManager(resp.files);
+
+      $('#File-manager').empty().html(handle);
+      // initialize collapsible
+      $('.collapsible').collapsible();
+
+      $('.files').click(function() {
+        f1 = $(this).data('file');
+        current_file = f1;
+        $('#cleanerForm #dfile1').val(f1);
+        $("#working_file").text(f1);
+        // console.log(f1);
+        $.post("/file-data?string="+f1,
+        //    {
+        //        string:f1
+        //    },
+           function(result){
+            console.log(result);
+            current_file_data = result.data;
+            makeSelect(Object.keys(current_file_data),'#sheetnameid');
+           }
+           );
     }
   );
+
+
+  });
 });
