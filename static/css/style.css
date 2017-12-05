@@ -26,6 +26,10 @@
   background-color: #efefef;
 }
 
+#cleanerForm .progress{
+  display: none;
+}
+
 
 @media (max-width: 600px) {
   #footer {

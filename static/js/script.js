@@ -28,6 +28,31 @@ function subForm() {
     );
 }
 
+$("form#cleanerForm").submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $('#cleanerForm .progress').show();
+    $.ajax({
+        url: "/File-Upload ",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if (data.upstatus) {
+                initFileManager();
+            }else{
+
+            }
+            $('#cleanerForm .progress').hide();
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    }).fail(function() {
+        alert( "error" );
+      });
+});
+
+
 function makeDownloads(res){
   var temp = ``;
   $('#resultsHere').html('');
@@ -81,9 +106,7 @@ function fileManager(files){
   return handle;
 }
 
-$(document).ready(function(){
-  current_file = "";
-  current_file_data = "";
+function initFileManager(){
   // requet files
   url = '/file-manager';
   $.get(url,
@@ -101,18 +124,20 @@ $(document).ready(function(){
         $('#cleanerForm #dfile1').val(f1);
         // console.log(f1);
         $.post("/file-data?string="+f1,
-        //    {
-        //        string:f1
-        //    },
-           function(result){
-            // console.log(result);
-            current_file_data = result.data;
-            makeSelect(Object.keys(current_file_data),'#sheetnameid');
-           }
-           );
-    }
-  );
-
-
+          //    {
+          //        string:f1
+          //    },
+         function(result){
+          // console.log(result);
+          current_file_data = result.data;
+          makeSelect(Object.keys(current_file_data),'#sheetnameid');
+        });
+    });
   });
+}
+
+$(document).ready(function(){
+  current_file = "";
+  current_file_data = "";
+  initFileManager();
 });
