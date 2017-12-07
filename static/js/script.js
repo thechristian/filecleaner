@@ -91,7 +91,7 @@ function fileManager(files){
       continue;
     }else{
       handle += `<li>
-                  <div class="collapsible-header" style="text-align:left"><i class="material-icons blue-text">folder</i>${item}</div>
+                  <div class="collapsible-header" style="text-align:left" id="${item}"><i class="material-icons blue-text">folder</i>${item}</div>
                   <div class="collapsible-body"><div class="collection" style="text-align:left;">`;
       for (file of files[item]) {
         f1=item+"/"+file;
@@ -106,18 +106,36 @@ function fileManager(files){
   return handle;
 }
 
+function search(files,search){
+  results = [];
+  for (var item in files) {
+    if (item == 'LEVEL') {
+      continue;
+    }else{
+      for (file of files[item]) {
+        f1=item+"/"+file;
+        f = file.split('.');
+        file = f[f.length-2];
+        results.push(item+":"+file);
+      }
+    }
+  }
+  console.log(results);
+}
+
 function initFileManager(){
   // requet files
   url = '/file-manager';
   $.get(url,
     function(resp){
       // console.log(resp);
+      file_tree = resp.files;
       handle = fileManager(resp.files);
 
       $('#File-manager').empty().html(handle);
       // initialize collapsible
       $('.collapsible').collapsible();
-
+      
       $('.files').click(function() {
         f1 = $(this).data('file');
         current_file = f1;
@@ -133,11 +151,25 @@ function initFileManager(){
           makeSelect(Object.keys(current_file_data),'#sheetnameid');
         });
     });
+
+    $("#search").keypress(function(){
+        var valu = $(this).val();
+        if (valu.length > 3) {
+          console.log(valu);
+          search(file_tree,valu);
+        }else{
+
+        }
+    });
+
+    console.log(file_tree);
   });
+
 }
 
 $(document).ready(function(){
   current_file = "";
   current_file_data = "";
+  file_tree = "";
   initFileManager();
 });
