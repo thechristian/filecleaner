@@ -133,7 +133,7 @@ function initFileManager(){
   url = '/file-manager';
   $.get(url,
     function(resp){
-      // console.log(resp);
+      console.log(resp);
       file_tree = resp.files;
       handle = fileManager(resp.files);
 

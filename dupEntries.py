@@ -5,15 +5,14 @@ from utils import get_random_id,clear_output_folder
 import xlsxwriter
 
 
-def checkForDuplicateInRows(file_location, sname):
+def checkForDuplicateInRows(file_location, sname, userfolder):
     # str(sname)
     datafile = pd.read_excel(file_location, sname)
     df = pd.DataFrame(datafile)
-
+    folder = os.path.join('dupcheck',userfolder,'')
     df['Is_Duplicated'] = df.duplicated()
-    folder = 'dupcheck/username/'
     if not os.path.exists(folder):
-        os.mkdir(folder)
+        os.makedirs(folder)
     else:
         pass
         #clear_output_folder(folder)
@@ -24,15 +23,15 @@ def checkForDuplicateInRows(file_location, sname):
     return dname
 
 
-def checkDuplicateInCol(upfname, sname, colname):
+def checkDuplicateInCol(upfname, sname, colname,userfolder):
     # str(upfname)
     datafile = pd.read_excel(upfname, sname)
     df = pd.DataFrame(datafile)
+    folder = os.path.join('dupcheck',userfolder,'')
     if colname in df:
         col_entries = df.loc[:, colname]
-        folder = 'dupcheck/username/'
         if not os.path.exists(folder):
-            os.mkdir(folder)
+            os.makedirs(folder)
         else:
             pass
             #clear_output_folder(folder)

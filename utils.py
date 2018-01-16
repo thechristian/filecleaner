@@ -41,7 +41,7 @@ def get_random_id():
         today_folder = '-'.join([fullTime,randomNumber])
     return today_folder
 
-def upload_folder(uploadFolder):
+def upload_folder(uploadFolder,userfolder):
     # I am thinking we could group files in folders according to date
     # and use time as the random string
     for i in xrange(1):
@@ -50,9 +50,10 @@ def upload_folder(uploadFolder):
         # get only date
         date = timer.date().isoformat()
         # date/time
-        today_folder = os.path.join(uploadFolder,date)
+        today_folder = os.path.join(uploadFolder,userfolder,date)
         if not os.path.exists(today_folder):
-            os.mkdir(os.path.join(today_folder))
+            #create
+            os.makedirs(os.path.join(today_folder))
     return today_folder
 
 
@@ -85,3 +86,6 @@ def clear_output_folder(folder):
                 os.unlink(file_path)
         except Exception as e:
             print(e)
+
+def email_folder(email):
+    return email.split('@')[0];

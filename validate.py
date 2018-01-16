@@ -10,12 +10,12 @@ phonenumbkey = "regex expression"
 
 
 
-def emailvalidator(fname, sname, colname):
+def emailvalidator(fname, sname, colname,userfolder):
     data = pd.read_excel(fname, sname)
     df = pd.DataFrame(data)
-    folder = 'emails/username/'
+    folder = os.path.join('email',userfolder,'')
     if not os.path.exists(folder):
-        os.mkdir(folder)
+        os.makedirs(folder)
     else:
         pass
         # clear_output_folder(folder)

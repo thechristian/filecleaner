@@ -5,7 +5,8 @@ messsage1 = hashlib.sha256()   # calling hash function to use
 messsage2 = hashlib.sha256()
 
 
-def checkFile(file1, file2):
+def checkFile(file1, file2, userfolder):
+    folder = os.path.join('email',userfolder,'')
     openfile1 = open(file1, mode='r')  # opening file in read mode
     openfile2 = open(file2, mode='r')
     content1 = openfile1.read()  # reading the content of the file
