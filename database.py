@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-engine = create_engine('sqlite:////tmp/test1.db',convert_unicode=True)
+db_path = os.path.join(os.path.dirname(__file__), 'app.db')
+db_uri = 'sqlite:///{}'.format(db_path)
+engine = create_engine(db_uri,convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
