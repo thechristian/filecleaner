@@ -40,9 +40,15 @@ security = Security(app, user_datastore)
 # Create a user to test with
 @app.before_first_request
 def create_user():
-    init_db()
-    user_datastore.create_user(email='sbk@sbk.com', password='sbk',username='sbk2')
-    db_session.commit()
+    try:
+        init_db()
+        user_datastore.create_user(email='sbk@sbk.com', password='sbk',username='sbk2')
+        db_session.commit()
+    except:
+        db_session.rollback()
+        raise
+    finally:
+        db_session.close()
 
 def uploadedFiles():
     # list of files in upload folder
