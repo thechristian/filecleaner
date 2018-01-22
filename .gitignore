@@ -4,9 +4,11 @@
 # project specific
 newfiles/**
 cleaned/**
-#uploads/**
+# uploads/**
 duplicates/**
 noduplicates/**
+uploads/**
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
