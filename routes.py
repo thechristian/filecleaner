@@ -10,6 +10,7 @@ import pprint
 from validate import emailvalidator #phonenumbvalidator
 import os
 from flask import Flask, render_template, request, Response, redirect, url_for, jsonify, send_file
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.utils import secure_filename
 import sys
 import random
@@ -21,6 +22,8 @@ from flask_mail import Mail
 from forms import ExtendedRegisterForm
 
 app = Flask(__name__)
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 app.config['SECRET_KEY'] = 'super-secret'
 size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
 app.config['uploadFolder'] = 'uploads'
@@ -33,22 +36,23 @@ ColumnNameError = "Column name not provided"
 app.config['SECURITY_REGISTERABLE'] = True
 app.config['SECURITY_PASSWORD_SALT'] = 'salt'
 app.config['SECURITY_SEND_REGISTER_EMAIL']  = False
+
 # Setup Flask-Security
 user_datastore = SQLAlchemySessionUserDatastore(db_session,User, Role)
 security = Security(app, user_datastore)
 
 # Create a user to test with
-@app.before_first_request
-def create_user():
-    try:
-        init_db()
-        user_datastore.create_user(email='sbk@sbk.com', password='sbk',username='sbk2')
-        db_session.commit()
-    except:
-        db_session.rollback()
-        raise
-    finally:
-        db_session.close()
+# @app.before_first_request
+# def create_user():
+#    try:
+#        init_db()
+#        user_datastore.create_user(email='sbk@sbk.com', password='sbk',username='sbk2')
+#        db_session.commit()
+#    except:
+#        db_session.rollback()
+#        raise
+#    finally:
+#        db_session.close()
 
 def uploadedFiles():
     # list of files in upload folder
