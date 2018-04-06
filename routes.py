@@ -109,13 +109,16 @@ def compare_files():
     #return Response(str, mimetype="text/text")
 
     if request.form.get('comparefiles'):
-        compf2 = request.files['dataFile2']  # get file name from web interface
+        compf1 = request.files['cfield1']  # get file name from web interface
+        compf2 = request.files['cfield2']
+        filename1 = secure_filename(compf1.filename)
         filename2 = secure_filename(compf2.filename)
         userfolder = email_folder(current_user.email)
+        upfname1 = os.path.join(app.config['uploadFolder'], userfolder, get_random_id() + 'compf1-' + filename1)
         upfname2 = os.path.join(app.config['uploadFolder'], userfolder, get_random_id() + 'compf2-' + filename2)
 
         if size:
-            compf2.save(upfname2)
+            compf1.save(upfname1)
             # checkFile(upfname1, upfname2)
             hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
             if hashvalue1 == hashvalue2:
