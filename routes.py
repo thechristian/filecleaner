@@ -119,6 +119,7 @@ def compare_files():
 
         if size:
             compf1.save(upfname1)
+            compf2.save(upfname2)
             # checkFile(upfname1, upfname2)
             hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
             if hashvalue1 == hashvalue2:
