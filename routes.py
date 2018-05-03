@@ -75,6 +75,12 @@ def uploadedFiles():
 def main():
     return render_template('index.html')  # web interface - form
 
+@app.route("/user-details",methods=['GET'])
+@login_required
+def user_details():
+    user = {'email':current_user.email}
+    return jsonify(user=user)
+
 @app.route("/file-manager", methods=['GET', 'POST'])
 @login_required
 def filemanager():
@@ -126,7 +132,7 @@ def compare_files():
             return FileSizeError
 
 # this would separately handle all file uploads
-@app.route('/File-Upload',methods=['POST'])
+@app.route('/File-Upload',methods=['POST','GET'])
 @login_required
 def upload_file():
     if request.method == 'POST':    # checking if its a post method
@@ -136,9 +142,9 @@ def upload_file():
         userfolder = email_folder(current_user.email)
         upfname1 = os.path.join(upload_folder(app.config['uploadFolder'], userfolder), time + "." +filename)
         f1.save(upfname1)
-        return jsonify(upstatus=True)
+        return render_template('iframe.html', upstatus=1)
     else:
-        return jsonify(upstatus=False)
+        return render_template('iframe.html', upstatus=0)
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
 @login_required

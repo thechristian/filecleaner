@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="static/css/style.css">
 {% endblock %}
 	<body>
+
 		{% block navigation %}
 			{% include "navs/main.html" %}
 		{% endblock %}
@@ -15,7 +16,7 @@
 					<div id="File-manager" style="text-align:center">
 						<img src="static/gif-load.gif" alt="Loading ...">
 					</div>
-					<form id="cleanerForm" action="/File-Upload" method="post" enctype="multipart/form-data">
+					<form id="cleanerForm" action="/File-Upload" method="post" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();">
 						<div class="progress blue lighten-4">
 							 <div class="indeterminate blue"></div>
 					 </div>
@@ -23,13 +24,16 @@
 				      <div class="btn blue">
 				        <span>File</span>
 				        <input type="file" name="newdataFile1" id="ndfile1" required="required" >
+
 				      </div>
 				      <div class="file-path-wrapper">
 				        <input class="file-path validate" type="text">
 				      </div>
 				    </div>
 						<input type="submit" value="upload" class="btn blue">
-
+						<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+						<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;">  
+						</iframe>
 					</form>
 				</div>
 				<div class="col l5" id="operationsHere">
@@ -46,5 +50,6 @@
 			<script type="text/javascript" src="static/js/scripting.js"></script>
 			<script type="text/javascript" src="static/js/script.js"></script>
 		{% endblock %}
+
 	</body>
 </html>

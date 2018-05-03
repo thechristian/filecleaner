@@ -88,4 +88,4 @@ def clear_output_folder(folder):
             print(e)
 
 def email_folder(email):
-    return email.split('@')[0];
+    return email.split('@')[0]+email.split('@')[-1];

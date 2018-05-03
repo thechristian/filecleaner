@@ -28,29 +28,50 @@ function subForm() {
     );
 }
 
-$("form#cleanerForm").submit(function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $('#cleanerForm .progress').show();
-    $.ajax({
-        url: "/File-Upload ",
-        type: 'POST',
-        data: formData,
-        success: function (data) {
-            if (data.upstatus) {
-                initFileManager();
-            }else{
+function startUpload(){
+     $('#cleanerForm .progress').show();;
+    return true;
+}
 
-            }
-            $('#cleanerForm .progress').hide();
-        },
-        cache: false,
-        contentType: false,
-        processData: false
-    }).fail(function() {
-        alert( "error" );
-      });
-});
+function stopUpload(status){
+      if (status){
+         initFileManager();
+      }else {
+         alert( "error" );
+      }
+      $('#cleanerForm .progress').hide();
+      return true;
+}
+
+// $("form#cleanerForm").submit(function(e) {
+//     e.preventDefault();
+//     var formData = new FormData(this);
+//     field = formData.entries().next()['value'];
+//
+//     data = {
+//       'newdataFile1':field[1]
+//     };
+//     console.log(data);
+//     $('#cleanerForm .progress').show();
+//     $.ajax({
+//         url: "/File-Upload ",
+//         type: 'POST',
+//         data: formData,
+//         success: function (data) {
+//             if (data.upstatus) {
+//                 initFileManager();
+//             }else{
+//
+//             }
+//
+//         },
+//         cache: false,
+//         contentType: false,
+//         processData: false
+//     }).fail(function() {
+//
+//       });
+// });
 
 
 function makeDownloads(res){
@@ -181,7 +202,7 @@ function activateFiles(){
     current_file = f1;
     $('#cleanerForm #dfile1').val(f1);
     // console.log(f1);
-    $.post("/file-data?string="+f1,
+    $.get("/file-data?string="+f1,
       //    {
       //        string:f1
       //    },
@@ -194,8 +215,12 @@ function activateFiles(){
 }
 
 $(document).ready(function(){
+   $('.dropdown-trigger').dropdown();
   current_file = "";
   current_file_data = "";
   file_tree = "";
+  $.get("/user-details",function(result){
+    console.log(result);
+  });
   initFileManager();
 });
