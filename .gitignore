@@ -49,3 +49,7 @@ ENV/
 *~
 *.swp
 *.swap
+email/*
+emails/*
+dupcheck/*
+uploads/*
