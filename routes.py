@@ -25,7 +25,7 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 csrf.init_app(app)
 app.config['SECRET_KEY'] = 'super-secret'
-size = app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024  # upload file size allowed 3MB
+size = app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # upload file size allowed 3MB
 app.config['uploadFolder'] = 'uploads'
 SheetNameError = "Sheet name not provided"
 FileNotSupportedError = "Error! File not supported. Upload the appropriate file type."

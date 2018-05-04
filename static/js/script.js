@@ -18,6 +18,7 @@ function makeColumns(){
 function subForm() {
     var data = $('form').serialize();
     var url = "/File-Cleaner"; // the script where you handle the form input.
+    $('#resultsHere').html("<img src='static/gif-load.gif' alt='Loading ...'><br><p>File is Preparing ...</p>");
     $.post(url,data,
       function(resp){
         // console.log(resp);
@@ -42,37 +43,6 @@ function stopUpload(status){
       $('#cleanerForm .progress').hide();
       return true;
 }
-
-// $("form#cleanerForm").submit(function(e) {
-//     e.preventDefault();
-//     var formData = new FormData(this);
-//     field = formData.entries().next()['value'];
-//
-//     data = {
-//       'newdataFile1':field[1]
-//     };
-//     console.log(data);
-//     $('#cleanerForm .progress').show();
-//     $.ajax({
-//         url: "/File-Upload ",
-//         type: 'POST',
-//         data: formData,
-//         success: function (data) {
-//             if (data.upstatus) {
-//                 initFileManager();
-//             }else{
-//
-//             }
-//
-//         },
-//         cache: false,
-//         contentType: false,
-//         processData: false
-//     }).fail(function() {
-//
-//       });
-// });
-
 
 function makeDownloads(res){
   var temp = ``;
@@ -215,12 +185,18 @@ function activateFiles(){
 }
 
 $(document).ready(function(){
-   $('.dropdown-trigger').dropdown();
-  current_file = "";
-  current_file_data = "";
-  file_tree = "";
-  $.get("/user-details",function(result){
-    console.log(result);
-  });
-  initFileManager();
+    $('.dropdown-trigger').dropdown();
+    $( document ).ajaxStart(function() {
+      $('.btn').addClass('disabled');
+    });
+    $( document ).ajaxComplete(function() {
+      $('.btn').removeClass('disabled');
+    });
+    current_file = "";
+    current_file_data = "";
+    file_tree = "";
+    $.get("/user-details",function(result){
+      console.log(result);
+    });
+    initFileManager();
 });

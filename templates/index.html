@@ -32,14 +32,14 @@
 				    </div>
 						<input type="submit" value="upload" class="btn blue">
 						<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-						<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;">  
+						<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;">
 						</iframe>
 					</form>
 				</div>
 				<div class="col l5" id="operationsHere">
 					{% include "forms/main.html" %}
 				</div>
-				<div class="col l4" id="resultsHere">
+				<div class="col l4" id="resultsHere" style="text-align:center">
 
 				</div>
 				{% endblock %}
