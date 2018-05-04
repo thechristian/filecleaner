@@ -1,17 +1,30 @@
 <!--File cleaning form-->
-<form id="cleanerForm" action="/File-Cleaner" method="post" enctype="multipart/form-data">
+<style type="text/css">
+	[type="checkbox"].filled-in:checked + label:after {
+  border: 2px solid #2196F3;
+  background-color: #2196F3;
+}
+
+input:focus:not([type]):not([readonly]), input[type="text"]:focus:not([readonly]), input[type="password"]:focus:not([readonly]), input[type="email"]:focus:not([readonly]), input[type="url"]:focus:not([readonly]), input[type="time"]:focus:not([readonly]), input[type="date"]:focus:not([readonly]), input[type="datetime"]:focus:not([readonly]), input[type="datetime-local"]:focus:not([readonly]), input[type="tel"]:focus:not([readonly]), input[type="number"]:focus:not([readonly]), input[type="search"]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #2196F3;
+    box-shadow: 0 1px 0 0 #2196F3;
+}
+label.error{
+	color:#2196F3!important;
+}
+</style>
+<form id="cleanerForm" action="/File-Cleaner" method="post">
 	<div>
-		<div class="card-panel center-align hoverable">
+		<div class="card-panel center-align">
+			{{current_user.email}}
 			<span class="blue-text text-darken-2">File Cleaning program, choose your file to start.</span>
 		</div>
-		<input type="file" name="dataFile1" id="dfile1" required="required" />
-		<!--<div class="file-path-wrapper">
-			<input class="file-path validate" type="text">
-		</div>		 -->		
+		<input type="text" name="dataFile1" id="dfile1" required="required" readonly />
 
 		<div class="">
 			<div class="file-path-wrapper">
-				<input type="text" id="sheetnameid" name="sheetname" placeholder="Sheet Name in Excel File" maxlength="20" required="required" />
+				<select class="blue-text text-darken-2" id="sheetnameid" name="sheetname" style="border-color:#2196F3" onchange="makeColumns();">
+				</select>
 			</div>
 			<p>
 				<input id="duplicates" class="filled-in" type="checkbox" name="check_dup_in_rows" value="checked" />
@@ -22,28 +35,35 @@
 				<label for="dupInCols">Check Duplicates In A Column</label>
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" /> 
+				<!-- <input type="text" id="dupcolid" name="dupcolname" placeholder="Column Name" maxlength="20" /> -->
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="dupcolname" style="border-color:#2196F3">
+				</select>
 			</div>
 			<!--<input type="file" name="dataFile" required = "required"/><br> -->
-			<p>
+			<!-- <p>
 				<input id="validatefonNum" class="filled-in" type="checkbox" name="pnumbers" value="checked" />
 				<label for="validatefonNum">Validate Phone Numbers</label>
+
 			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name. Note: Ghana mobile phone numbers only." maxlength="20" />
-			</div>
+				<!-- <input type="text" id="phonecol" name="phonenumbercol" placeholder="Column Name. Note: Ghana mobile phone numbers only." maxlength="20" />
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="phonenumbercol" style="border-color:#2196F3">
+				</select>
+			</div> -->
 			<p>
 				<input type="checkbox" class="filled-in" id="validateEmails" name="emails" value="checked" />
 				<label for="validateEmails">Validate E-mails</label>
-			</p>				
+			</p>
 			<div class="file-path-wrapper">
-				<input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> 
+				<!-- <input type="text" id="emailcol" name="emailcol" placeholder="Column Name" maxlength="20" /> -->
+				<select class="blue-text text-darken-2 sheetnameid_cols" name="emailcol" style="border-color:#2196F3">
+				</select>
 			</div>
-			<p>
+			<!-- <p>
 				<input class="filled-in" type="checkbox" id="compare" name="comparefiles" value="checked">
 				<label for="compare">Compare Two Files</label>
 			</p>
-			 <input type="file" id="dfile2" name="dataFile2" />
+			 <input type="file" id="dfile2" name="dataFile2" /> -->
 		</div>
 
 	</div>
@@ -51,7 +71,7 @@
 	<div class="input-field row">
 		<div class="col l8">&nbsp;</div>
 		<div class="col l4">
-			<button class="btn btn-danger" type="submit" id="isubmit">RUN</button>
+			<a class="btn blue" type="submit" id="isubmit" onclick="subForm()">RUN</a>
 		</div>
-	</div>	
+	</div>
 </form>

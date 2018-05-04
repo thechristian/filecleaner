@@ -1,0 +1,42 @@
+<!--File cleaning form-->
+<form id="compareForm" action="/compare-files" method="post" enctype="multipart/form-data">
+	<div class="card-panel center-align">
+		<span class="blue-text text-darken-2">Select the files you want to compare</span>
+	</div>
+
+	<div class="row">
+		<div class="col s12">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>File 1</span>
+					<input type="file" name="cfield1" required="required" />
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    
+    	<div class="row">
+		<div class="col s12">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>File 2</span>
+					<input type="file" name="cfield2" required="required" />
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s6">
+			<div class="input-field">
+					<button class="btn" type="submit" id="isubmit">RUN</button>
+			</div>
+	</div>
+</form>

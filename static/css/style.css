@@ -9,13 +9,30 @@
 
 .upload-config {
 	padding-top:4rem;
+  padding-right: 4rem;
+  padding-left: 4rem;
 }
 
-footer {
-  position:;
+#body, #footer{
+  display: block;
+}
+
+#footer {
+  /*position: absolute;*/
   right: 0;
   bottom: 0;
   left: 0;
   padding: 1rem;
   background-color: #efefef;
+}
+
+#cleanerForm .progress{
+  display: none;
+}
+
+
+@media (max-width: 600px) {
+  #footer {
+    position: relative;
+  }
 }

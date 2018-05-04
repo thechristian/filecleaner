@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Processing complete! {% endblock %}
+{% block head %}
+	{# the super() call imports the main files referenced in the extended layout #}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+{% endblock %}
+	<body>
+		{% block navigation %}
+			{% include "navs/main.html" %}
+		{% endblock %}
+		<div class="section" id="index-banner">
+			<div class="container">
+				{% block content %}
+				<div class="row">
+						{% if res.row_dupes.status %}
+						<div class="col s4 offset-s4">
+							<div class="card-panel light-blue">
+								<span class="white-text">
+									Row duplication check has been completed. {{ res.row_dupes.result_path }}
+								</span>
+							</div>
+						</div>
+						{% elif res.col_dupes.status %}
+						<div class="col s4 offset-s4">
+							<div class="card-panel light-blue">
+								<span class="white-text">
+									Column duplication check has been performed.
+								</span>
+							</div>
+						</div>
+						{% elif res.col_email.status %}
+						<div class="col s4 offset-s4">
+							<div class="card-panel light-blue">
+								<span class="white-text">
+									Email column check has been made.
+								</span>
+							</div>
+						</div>
+						{% endif %}
+				</div>
+				{% endblock %}
+			</div>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+	{# the super() call imports the main files referenced in the extended layout #}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+{% endblock %}
+	<body>
+		{% block navigation %}
+			{% include "navs/main.html" %}
+		{% endblock %}
+		<div class="section" id="index-banner">
+			<div class="container">
+				{% block content %}
+					<div class="row upload-config">
+						<div class="col l3"> &nbsp; </div>
+						<div class="col l6">
+							{% include "forms/compare.html" %}							
+						</div>
+						<div class="col l3"></div>
+					</div>
+				{% endblock %}
+			</div>
+		</div>
+		{% block scripts %}
+			{{ super() }}
+			<script type="text/javascript" src="static/dist/jquery/js/jquery.validate.min.js"></script>
+			<script type="text/javascript" src="static/dist/jquery/js/additional-methods.js"></script>
+			<script type="text/javascript" src="static/js/scripting.js"></script>
+		{% endblock %}
+	</body>
+</html>

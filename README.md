@@ -18,3 +18,18 @@ Next is to install all the dependencies of the application, they come bundled in
 `pip install -r requirements.txt` to install them.
 
 Afterwards, you can run the application with `python app.py`
+
+
+## Overview
+The application runs on 
+- Python Flask
+- Jinja2 (for templating)
+- Pandas (spreadsheet manipulations)
+- xlsxwriter (to take off where pandas fails)
+
+plus a few other python in-built functions.
+
+The starting point for the application is `app.py`. Which in-turn calls `routes.py`, the 
+main application controller. 
+On the index page, the form calls the `File-cleaner` route. Activities happening after here 
+can be found in the `routes.py` file. 
