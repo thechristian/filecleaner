@@ -124,7 +124,7 @@ function initFileManager(){
   url = '/file-manager';
   $.get(url,
     function(resp){
-      console.log(resp);
+      // console.log(resp);
       file_tree = resp.files;
       handle = fileManager(resp.files);
 
@@ -195,8 +195,8 @@ $(document).ready(function(){
     current_file = "";
     current_file_data = "";
     file_tree = "";
-    $.get("/user-details",function(result){
-      console.log(result);
-    });
+    // $.get("/user-details",function(result){
+    //   // console.log(result);
+    // });
     initFileManager();
 });
