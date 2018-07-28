@@ -1,5 +1,6 @@
 <!--File cleaning form-->
 <form id="compareForm" action="/compare-files" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 	<div class="card-panel center-align">
 		<span class="blue-text text-darken-2">Select the files you want to compare</span>
 	</div>
