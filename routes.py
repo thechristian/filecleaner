@@ -6,6 +6,7 @@ from database import db_session, init_db
 from models import User, Role
 import re
 import json
+import uuid
 import pprint
 from validate import emailvalidator #phonenumbvalidator
 import os
@@ -56,14 +57,14 @@ security = Security(app, user_datastore)
 
 def uploadedFiles():
     # list of files in upload folder
-    userfolder = email_folder(current_user.email)
-    upath = os.path.join(app.config['uploadFolder'], userfolder,'')
+    # userfolder = email_folder(current_user.email)
+    upath = os.path.join(app.config['uploadFolder'], '')
     if not os.path.exists(upath):
         os.makedirs(upath)
     uploaded = [f for f in os.listdir(upath)]
     uploadedFiles = {}
     for item in uploaded:
-        path = os.path.join(app.config['uploadFolder'], userfolder, item)
+        path = os.path.join(app.config['uploadFolder'], item)
         if os.path.isdir(path):
             uploadedFiles[item] = [f for f in os.listdir(path)]
         else:
@@ -71,31 +72,30 @@ def uploadedFiles():
     return uploadedFiles
 
 @app.route("/")
-@login_required
+# @login_required
 def main():
     return render_template('index.html')  # web interface - form
 
-@app.route("/user-details",methods=['GET'])
-@login_required
-def user_details():
-    user = {'email':current_user.email}
-    return jsonify(user=user)
+# @app.route("/user-details",methods=['GET'])
+# # @login_required
+# def user_details():
+#     user = {'email':current_user.email}
+#     return jsonify(user=user)
 
 @app.route("/file-manager", methods=['GET', 'POST'])
-@login_required
+# @login_required
 def filemanager():
     return jsonify(files=uploadedFiles())
 
 @app.route("/file-data", methods=['GET','POST'])
-@login_required
+# @login_required
 def get_file_data():
     # for example getting excel sheets
-
     try:
         # get file path
         fine_file = str(request.args.get('string').strip()) # fine file name
-        userfolder = email_folder(current_user.email)
-        file_location = os.path.join(app.config['uploadFolder'], userfolder, fine_file)
+        # userfolder = email_folder(current_user.email)
+        file_location = os.path.join(app.config['uploadFolder'], fine_file)
         # call function to return requested file data
         data = collectSheets(file_location)
         return jsonify(data=data,status=True)
@@ -104,60 +104,60 @@ def get_file_data():
 
 
 @app.route("/compare")
-@login_required
+# @login_required
 def compare():
     return render_template('compare.html')  # web interface - form
 
 @app.route('/compare-files', methods=['POST'])
-@login_required
+# @login_required
 def compare_files():
-    # str = pprint.pformat(request.files['cfield'])
-    #return Response(str, mimetype="text/text")
-
-    if request.form.get('comparefiles'):
-        compf1 = request.files['cfield1']  # get file name from web interface
+    if request.files['cfield1'] and request.files['cfield2']:
+        # get file handles
+        compf1 = request.files['cfield1']
         compf2 = request.files['cfield2']
         filename1 = secure_filename(compf1.filename)
         filename2 = secure_filename(compf2.filename)
-        userfolder = email_folder(current_user.email)
-        upfname1 = os.path.join(app.config['uploadFolder'], userfolder, get_random_id() + 'compf1-' + filename1)
-        upfname2 = os.path.join(app.config['uploadFolder'], userfolder, get_random_id() + 'compf2-' + filename2)
+        # userfolder = email_folder(current_user.email)
+        upfname1 = os.path.join(app.config['uploadFolder'], '', str(uuid.uuid4()) + 'compf1-' + filename1)
+        upfname2 = os.path.join(app.config['uploadFolder'], '', str(uuid.uuid4()) + 'compf2-' + filename2)
 
         if size:
             compf1.save(upfname1)
             compf2.save(upfname2)
-            # checkFile(upfname1, upfname2)
-            hashvalue1, hashvalue2, = checkFile(upfname1, upfname2)
+            hashvalue1, hashvalue2, = checkFile(upfname1, upfname2, app.config['uploadFolder'])
             if hashvalue1 == hashvalue2:
                 return render_template('same.html')
             else:
                 return render_template('different.html')
         else:
             return FileSizeError
+    return 'No file uploaded! Return and try again.'
 
 # this would separately handle all file uploads
 @app.route('/File-Upload',methods=['POST','GET'])
-@login_required
+# @login_required
 def upload_file():
     if request.method == 'POST':    # checking if its a post method
-        f1 = request.files['newdataFile1']  # get file name from web interface
+        f1 = request.files['newdataFile1']  # grab file handle
         filename = secure_filename(f1.filename)
         time = datetime.datetime.now().time().isoformat().split('.')[0]
-        userfolder = email_folder(current_user.email)
-        upfname1 = os.path.join(upload_folder(app.config['uploadFolder'], userfolder), time + "." +filename)
+        # userfolder = email_folder(current_user.email)
+        todaydir = upload_folder(app.config['uploadFolder'],'')
+        filecount = len(os.listdir(todaydir))
+        upfname1 = os.path.join(todaydir, time + "." +str(filecount)+"_"+filename)
         f1.save(upfname1)
         return render_template('iframe.html', upstatus=1)
     else:
         return render_template('iframe.html', upstatus=0)
 
 @app.route('/File-Cleaner', methods=['GET', 'POST'])  # getting all methods from the form
-@login_required
+# @login_required
 def clean_file():
     if request.method == 'POST':    # checking if its a post method
         filename = str(request.form.get('dataFile1').strip())  # get file name from web interface
         sheetname = str(request.form.get('sheetname').strip())
-        userfolder = email_folder(current_user.email)
-        dfile = os.path.join(app.config['uploadFolder'], userfolder, filename)
+        # userfolder = email_folder(current_user.email)
+        dfile = os.path.join(app.config['uploadFolder'], '', filename)
 
         #return jsonify(filename = filename)
         #prepare actions
@@ -175,7 +175,6 @@ def clean_file():
                 'status': False,
             }
         }
-        userfolder = email_folder(current_user.email)
         # if the user checked to perform row duplication
         if row_dupes:
             if allowed_files(dfile):
@@ -184,7 +183,7 @@ def clean_file():
                     return SheetNameError
                 else:
                     #let checkForDuplicateInRows return path to prepared file
-                    result = checkForDuplicateInRows(dfile, sheetname, userfolder)
+                    result = checkForDuplicateInRows(dfile, sheetname, '')
                     stats['row_dupes']['status'] = True
                     stats['row_dupes']['result_path'] = result
             else:
@@ -200,7 +199,7 @@ def clean_file():
             if sheetname != "" and colname != "":
                 if allowed_files(dfile):
                     #let checkDuplicateInCol return path to prepared file
-                    result = checkDuplicateInCol(dfile, sheetname, colname, userfolder)
+                    result = checkDuplicateInCol(dfile, sheetname, colname, '')
                     stats['col_dupes']['status'] = True
                     stats['col_dupes']['result_path'] = result
                 else:
@@ -218,7 +217,7 @@ def clean_file():
             if sheetname != "" and colname != "":
                 if allowed_files(dfile):
                     # let emailvalidator return path to prepared file
-                    result = emailvalidator(dfile, sheetname, colname, userfolder)
+                    result = emailvalidator(dfile, sheetname, colname, '')
                     stats['col_email']['status'] = True
                     stats['col_email']['result_path'] = result
                 else:
@@ -232,7 +231,7 @@ def clean_file():
         return jsonify(res=stats)
 
 @app.route('/File-download', methods=['GET', 'POST'])  # download the requested file
-@login_required
+# @login_required
 def download_file():
     dfile = request.args.get('file')
     dfile_name = dfile.split('/')[-1]
