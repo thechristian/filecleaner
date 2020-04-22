@@ -20,3 +20,4 @@ Flask-Security
 Flask-SQLAlchemy
 Flask-WTF
 bcrypt
+email_validator
